@@ -1,6 +1,7 @@
 
 import java.util.Stack;
 import java.util.StringTokenizer;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,8 +17,11 @@ public class Analizador extends javax.swing.JFrame {
 public Stack <Integer> pE=new Stack <Integer>();
 public Stack  poperadores =new Stack ();
 public Stack  poperandos =new Stack ();
+public Stack  poperandoscompara =new Stack ();
+public Stack  tiposcompara =new Stack ();
 public Stack  tipos =new Stack ();
-String tip="",operando="";
+String tip="",operando="",operadores="";
+String err="";
 
 int [] insertar;
     /**
@@ -50,6 +54,10 @@ int [] insertar;
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        txterr = new javax.swing.JTextPane();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,13 +73,13 @@ int [] insertar;
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null,null},
+                {null, null, null, null,null},
+                {null, null, null, null,null},
+                {null, null, null, null,null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "#", "OPER", "OP1", "OP2","RES"
             }
         ));
         jScrollPane6.setViewportView(jTable1);
@@ -85,53 +93,74 @@ int [] insertar;
 
         jButton2.setText("jButton1");
 
+        jScrollPane7.setViewportView(txterr);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane8.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(263, 263, 263)
+                                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))))
-                .addContainerGap(358, Short.MAX_VALUE))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(9, 9, 9))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addContainerGap(215, Short.MAX_VALUE))
         );
 
         pack();
@@ -205,7 +234,7 @@ int [] insertar;
 }
 void analiza()
 {
-    boolean def=false,iden=false;
+    boolean def=false,iden=false,pcom=false;
     int cont=0;
     int contc=1;
     int edo=0;
@@ -229,9 +258,20 @@ while(st.hasMoreElements())
                      iden=true;
 
                     if(reser==0){
-                        poperandos.push(token);
-                        cont+=1;
-                      
+                         boolean a=poperandos.contains(token);
+                        if(a==true)
+                        {
+                            err+="Error Variable"+token+" ya inicializada \n";
+                            txterr.setText(err);
+                        }
+                        else
+                        {
+                            poperandos.push(token);
+                            
+                            cont+=1;
+                            
+                        }
+
                     }
 
                     if(reser==7)
@@ -256,7 +296,7 @@ cont=0;
                     }
                     if(reser==9)
                     {
-                        for(int i=0;i<cont;i++)
+                        for(int i=0;i<cont;i++)//char
                         {
                             tipos.push("char");
                         }
@@ -284,26 +324,45 @@ cont=0;
                     
 
                  }
-                 
-
 
             }
     
-    /*int edo=pE.peek();
-    if((reser==0 && edo==5)||(reser==0 && edo==33))
+    if(reser==34 || pcom==true)
     {
-        poperandos.push(token);
-        System.out.println("operando: "+" "+poperandos.pop());
-        cont++;
-    }
-    if(reser==7 && edo==7)
-    {
-        for(int i=0;i<=cont;i++){
-        poperadores.push(token);
-        System.out.println("operando: "+" "+poperadores.pop());
+        pcom=true;
+        def=false;
+        if(reser==0)
+        {
+            poperandos.push(token);
+            imprimepilaoperandos();
         }
-    }*/
+        if(reser==28)//+
+        {
+            System.out.println("+++++");
+            poperadores.push(token);
+            System.out.println(""+poperadores.peek());
+        }
+        if(reser==29)//-
+        {
+            poperadores.push(token);
+        }
+        if(reser==30)//*
+        {
+            poperadores.push(token);
+        }
+         if(reser==31)// /
+        {
+            poperadores.push(token);
+        }
+          if(reser==32)// =
+        {
+            poperadores.push(token);
+        }
+    }
+    
+   
 }
+imprimepilaoperadores();
 imprimepilaoperandos();
 imprimepilatipos();
 // 6
@@ -313,9 +372,22 @@ void imprimepilatipos()
     while(!tipos.empty())
     {
         tip+=(String) tipos.pop()+ " ";
+        
     }
   
     txttipos.setText(tip);
+   
+}
+void imprimepilaoperadores()
+{
+    while(!poperadores.empty())
+    {
+        operadores+=(String) poperadores.pop()+ " ";
+        
+    }
+  
+    jTextArea1.setText(operadores);
+  
 }
 void imprimepilaoperandos()
 {
@@ -325,11 +397,14 @@ void imprimepilaoperandos()
     } 
     StringBuilder builder1=new StringBuilder(operando);
     String oper2=builder1.reverse().toString();
-    txtoperandos.setText(oper2);
+    txtoperandos.setText(operando);
+    
+   
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         txttipos.setText("");
         txtoperandos.setText("");
+        txterr.setText("");
         tip="";
         operando="";
         analiza(); // TODO add your handling code here:
@@ -379,8 +454,12 @@ void imprimepilaoperandos()
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextPane txta;
+    private javax.swing.JTextPane txterr;
     private javax.swing.JTextPane txtoperadores;
     private javax.swing.JTextPane txtoperandos;
     private javax.swing.JTextPane txtsaltos;
