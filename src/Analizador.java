@@ -22,8 +22,33 @@ public Stack  tiposcompara =new Stack ();
 public Stack  tipos =new Stack ();
 String tip="",operando="",operadores="";
 String err="";
-
-int [] insertar;
+String [] tipo;
+String [] variable;
+static int [][] matrizDeTipos  ={{138,138,138,139,138,142,544},
+                                 {138,139,139,139,544,142,544},
+                                 {138,140,544,544,544,544,544},
+                                 {138,141,544,544,544,544,544},
+                                 {138,142,544,544,544,544,544},
+                                 {139,138,139,139,544,142,544},
+                                 {139,139,139,139,544,142,544},
+                                 {139,140,544,544,544,544,544},
+                                 {139,141,544,544,544,544,544},
+                                 {139,142,544,544,544,544,544},
+                                 {140,138,544,544,544,544,544},
+                                 {140,139,544,544,544,544,544},
+                                 {140,140,544,544,544,142,544},
+                                 {140,141,544,544,544,544,544},
+                                 {140,142,544,544,544,544,544},
+                                 {141,138,544,544,544,544,544},
+                                 {141,139,544,544,544,544,544},
+                                 {141,140,544,544,544,142,544},
+                                 {141,141,544,544,544,142,544},
+                                 {141,142,544,544,544,544,544},
+                                 {142,138,544,544,544,544,544},
+                                 {142,139,544,544,544,544,544},
+                                 {142,140,544,544,544,544,544},
+                                 {142,141,544,544,544,544,544},
+                                 {142,142,544,544,544,142,142}};
     /**
      * Creates new form Analizador
      */
@@ -42,34 +67,26 @@ int [] insertar;
 
         jScrollPane2 = new javax.swing.JScrollPane();
         txta = new javax.swing.JTextPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtoperandos = new javax.swing.JTextPane();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        txttipos = new javax.swing.JTextPane();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtsaltos = new javax.swing.JTextPane();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        txtoperadores = new javax.swing.JTextPane();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         txterr = new javax.swing.JTextPane();
-        jScrollPane8 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        txttipos = new javax.swing.JTextArea();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        txtoperadores = new javax.swing.JTextArea();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        txtoperandos = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jScrollPane2.setViewportView(txta);
 
-        jScrollPane1.setViewportView(txtoperandos);
-
-        jScrollPane3.setViewportView(txttipos);
-
         jScrollPane4.setViewportView(txtsaltos);
-
-        jScrollPane5.setViewportView(txtoperadores);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -95,9 +112,17 @@ int [] insertar;
 
         jScrollPane7.setViewportView(txterr);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane8.setViewportView(jTextArea1);
+        txttipos.setColumns(20);
+        txttipos.setRows(5);
+        jScrollPane9.setViewportView(txttipos);
+
+        txtoperadores.setColumns(20);
+        txtoperadores.setRows(5);
+        jScrollPane10.setViewportView(txtoperadores);
+
+        txtoperandos.setColumns(20);
+        txtoperandos.setRows(5);
+        jScrollPane11.setViewportView(txtoperandos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,33 +131,29 @@ int [] insertar;
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 782, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(104, 104, 104))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(263, 263, 263)
-                                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 172, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -140,27 +161,21 @@ int [] insertar;
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(9, 9, 9))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                        .addComponent(jScrollPane10, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jScrollPane9))
+                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1))
-                .addContainerGap(215, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -217,17 +232,28 @@ int [] insertar;
                     return 22;
                 case "elseif":
                     return 23;
-                case "function":return 24;
-                case "endfunction":return 25;
-                case "null":return 26;
-                case "include":return 27;
-                case "+":return 28;
-                case "-":return 29;
-                case "*":return 30;
-                case "/":return 31;
-                case "=":return 32;
-                case ",":return 33;
-                case ";":return 34;
+                case "function":
+                    return 24;
+                case "endfunction":
+                    return 25;
+                case "null":
+                    return 26;
+                case "include":
+                    return 27;
+                case "+":
+                    return 28;
+                case "-":
+                    return 29;
+                case "*":
+                    return 30;
+                case "/":
+                    return 31;
+                case "=":
+                    return 32;
+                case ",":
+                    return 33;
+                case ";":
+                    return 34;
                 
             }
         return 0;
@@ -237,6 +263,7 @@ void analiza()
     boolean def=false,iden=false,pcom=false;
     int cont=0;
     int contc=1;
+    int cont2=0;
     int edo=0;
     String texto="";
     String string = txta.getText();
@@ -261,14 +288,15 @@ while(st.hasMoreElements())
                          boolean a=poperandos.contains(token);
                         if(a==true)
                         {
-                            err+="Error Variable"+token+" ya inicializada \n";
+                            err+="Error Variable "+token+" ya inicializada \n";
                             txterr.setText(err);
                         }
                         else
                         {
                             poperandos.push(token);
-                            
-                            cont+=1;
+                            poperandoscompara.push(token);
+                            imprimepilaop2();
+                            cont++;
                             
                         }
 
@@ -281,6 +309,9 @@ while(st.hasMoreElements())
                         for(int i=0;i<cont;i++)
                         {
                             tipos.push("integer");
+                            tiposcompara.push("integer");
+                            imprimepilatipos();
+                            
                         }
 
 cont=0;
@@ -290,8 +321,11 @@ cont=0;
                         for(int i=0;i<cont;i++)
                         {
                             tipos.push("float");
+                            tiposcompara.push("float");
+                            imprimepilatipos();
+                           
                         }
-cont=0;
+                     cont=0;
 
                     }
                     if(reser==9)
@@ -299,17 +333,21 @@ cont=0;
                         for(int i=0;i<cont;i++)//char
                         {
                             tipos.push("char");
+                            tiposcompara.push("char");
+                            imprimepilatipos();
                         }
 
-cont=0;
+                    cont=0;
                     }
                     if(reser==10)
                     {
                         for(int i=0;i<cont;i++)
                         {
                             tipos.push("string");
+                            tiposcompara.push("String");
+                            imprimepilatipos();
                         }
-cont=0;
+                      cont=0;
 
                     }
                     if(reser==11)
@@ -329,76 +367,93 @@ cont=0;
     
     if(reser==34 || pcom==true)
     {
+        
         pcom=true;
         def=false;
+        if (reser==34)imprimepilaoperandos();
         if(reser==0)
         {
+            
+            limpiapilatipos2();
             poperandos.push(token);
-            imprimepilaoperandos();
+            imprimepilaop2();
+            
         }
         if(reser==28)//+
         {
             System.out.println("+++++");
             poperadores.push(token);
+            imprimepilaoperadores();
             System.out.println(""+poperadores.peek());
         }
         if(reser==29)//-
         {
             poperadores.push(token);
+            imprimepilaoperadores();
         }
         if(reser==30)//*
         {
             poperadores.push(token);
+            imprimepilaoperadores();
         }
          if(reser==31)// /
         {
             poperadores.push(token);
+            imprimepilaoperadores();
         }
           if(reser==32)// =
         {
             poperadores.push(token);
+            imprimepilaoperadores();
         }
     }
     
    
 }
-imprimepilaoperadores();
-imprimepilaoperandos();
-imprimepilatipos();
+
+imprimepilaop2();
+
 // 6
 }
 void imprimepilatipos()
 {
+    for(int i=0;i<tipos.size();i++){
+        tip+=tipos.elementAt(i)+" ";
+    }
+    tip+="\n";
+    txttipos.setText(tip);
+   
+}
+void limpiapilatipos2()
+{
     while(!tipos.empty())
     {
-        tip+=(String) tipos.pop()+ " ";
-        
+        tipos.pop();
     }
-  
-    txttipos.setText(tip);
    
 }
 void imprimepilaoperadores()
 {
-    while(!poperadores.empty())
-    {
-        operadores+=(String) poperadores.pop()+ " ";
-        
+    for(int i=0;i<poperadores.size();i++){
+        operadores+=poperadores.elementAt(i)+" ";
     }
-  
-    jTextArea1.setText(operadores);
-  
+    operadores+="\n";
+    txtoperadores.setText(operadores);
 }
 void imprimepilaoperandos()
 {
    while(!poperandos.empty())
     {
-        operando+=(String) poperandos.pop()+ " ";
-    } 
-    StringBuilder builder1=new StringBuilder(operando);
-    String oper2=builder1.reverse().toString();
+        poperandos.pop();
+    }
+}
+void imprimepilaop2()
+{
+    for(int i=0;i<poperandos.size();i++){
+        operando+=poperandos.elementAt(i)+" ";
+    }
+    operando+="\n";
     txtoperandos.setText(operando);
-    
    
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -407,6 +462,9 @@ void imprimepilaoperandos()
         txterr.setText("");
         tip="";
         operando="";
+        poperadores.clear();
+        poperandos.clear();
+        tipos.clear();
         analiza(); // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -448,21 +506,19 @@ void imprimepilaoperandos()
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextPane txta;
     private javax.swing.JTextPane txterr;
-    private javax.swing.JTextPane txtoperadores;
-    private javax.swing.JTextPane txtoperandos;
+    private javax.swing.JTextArea txtoperadores;
+    private javax.swing.JTextArea txtoperandos;
     private javax.swing.JTextPane txtsaltos;
-    private javax.swing.JTextPane txttipos;
+    private javax.swing.JTextArea txttipos;
     // End of variables declaration//GEN-END:variables
 }
