@@ -20,9 +20,8 @@ public Stack  poperandos =new Stack ();
 public Stack  poperandoscompara =new Stack ();
 public Stack  tiposcompara =new Stack ();
 public Stack  tipos =new Stack ();
-String tip="",operando="",operadores="";
+String tip="",operando="",operadores="",tipo="";
 String err="";
-String [] tipo;
 String [] variable;
 static int [][] matrizDeTipos  ={{138,138,138,139,138,142,544},
                                  {138,139,139,139,544,142,544},
@@ -370,13 +369,31 @@ cont=0;
         
         pcom=true;
         def=false;
-        if (reser==34)imprimepilaoperandos();
+        if (reser==34){
+        limpiapilaoperandos(); // se vacian las pilas de tipo y de operandos despues de definir las variables
+        limpiapilatipos2();
+        }
         if(reser==0)
         {
-            
-            limpiapilatipos2();
-            poperandos.push(token);
-            imprimepilaop2();
+           
+                int busquea = poperandoscompara.search(token);
+                if(busquea>=0){// se busva en la pilas de comparacion para determinar
+                System.out.println(busquea);                                               //el tipo para el semantico
+                tipo=(String) tiposcompara.elementAt(busquea-1);//-1 ya que la funcion search empieza desde 1 y no 0
+                tipos.push(tipo);
+                poperandos.push(token);
+                imprimepilaop2();
+                imprimepilatipos();         
+                }
+                else
+                {
+                    err+= "Varible "+token+ " no definida \n";
+                    txterr.setText(err);
+                    tipos.push("integer");
+                    poperandos.push(token);
+                    imprimepilaop2();
+                    imprimepilatipos();
+                }
             
         }
         if(reser==28)//+
@@ -440,7 +457,7 @@ void imprimepilaoperadores()
     operadores+="\n";
     txtoperadores.setText(operadores);
 }
-void imprimepilaoperandos()
+void limpiapilaoperandos()
 {
    while(!poperandos.empty())
     {
@@ -462,8 +479,12 @@ void imprimepilaop2()
         txterr.setText("");
         tip="";
         operando="";
+        operadores="";
         poperadores.clear();
         poperandos.clear();
+        tipos.clear();
+        poperandoscompara.clear();
+        tiposcompara.clear();
         tipos.clear();
         analiza(); // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
