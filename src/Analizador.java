@@ -2,6 +2,7 @@
 import java.util.Stack;
 import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,9 +21,12 @@ public Stack  poperandos =new Stack ();
 public Stack  poperandoscompara =new Stack ();
 public Stack  tiposcompara =new Stack ();
 public Stack  tipos =new Stack ();
-String tip="",operando="",operadores="",tipo="";
-String err="";
+String tip="",operando="",operadores="",tipo="",op1="",op2="",oper="",res="";
+String err="",peek="";
+int num=1;
+int indice=0; 
 String [] variable;
+boolean plus=false,resta=false,multi=false,divi=false,igual=false;
 static int [][] matrizDeTipos  ={{138,138,138,139,138,142,544},
                                  {138,139,139,139,544,142,544},
                                  {138,140,544,544,544,544,544},
@@ -48,11 +52,14 @@ static int [][] matrizDeTipos  ={{138,138,138,139,138,142,544},
                                  {142,140,544,544,544,544,544},
                                  {142,141,544,544,544,544,544},
                                  {142,142,544,544,544,142,142}};
+String[] columnNames = {"#", "OPER", "OP1", "OP2", "RES"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
     /**
      * Creates new form Analizador
      */
     public Analizador() {
         initComponents();
+        tabla.setModel(model);
     }
 
     /**
@@ -68,8 +75,6 @@ static int [][] matrizDeTipos  ={{138,138,138,139,138,142,544},
         txta = new javax.swing.JTextPane();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtsaltos = new javax.swing.JTextPane();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
@@ -80,25 +85,21 @@ static int [][] matrizDeTipos  ={{138,138,138,139,138,142,544},
         txtoperadores = new javax.swing.JTextArea();
         jScrollPane11 = new javax.swing.JScrollPane();
         txtoperandos = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabla = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jScrollPane2.setViewportView(txta);
 
         jScrollPane4.setViewportView(txtsaltos);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null,null},
-                {null, null, null, null,null},
-                {null, null, null, null,null},
-                {null, null, null, null,null}
-            },
-            new String [] {
-                "#", "OPER", "OP1", "OP2","RES"
-            }
-        ));
-        jScrollPane6.setViewportView(jTable1);
 
         jButton1.setText("Analizar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -123,6 +124,22 @@ static int [][] matrizDeTipos  ={{138,138,138,139,138,142,544},
         txtoperandos.setRows(5);
         jScrollPane11.setViewportView(txtoperandos);
 
+        jLabel1.setText("Entrada");
+
+        jLabel2.setText("Cuadruplos");
+
+        jLabel3.setText("Errores");
+
+        jLabel4.setText("Tipos");
+
+        jLabel5.setText("Tipos");
+
+        jLabel6.setText("Tipos");
+
+        jLabel7.setText("Tipos");
+
+        jScrollPane1.setViewportView(tabla);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -138,42 +155,77 @@ static int [][] matrizDeTipos  ={{138,138,138,139,138,142,544},
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane7)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPane7)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(41, 41, 41)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(104, 104, 104))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 172, Short.MAX_VALUE)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(28, 28, 28)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                        .addComponent(jScrollPane10, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane9))
-                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(jButton1)))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -257,6 +309,44 @@ static int [][] matrizDeTipos  ={{138,138,138,139,138,142,544},
             }
         return 0;
 }
+    void cuadruplos(int a)
+    {
+        
+        
+        
+       switch(a)
+       {
+           case 1:
+            
+            
+            op2=(String) poperandos.pop();
+            imprimepilaop2();
+            op1=(String) poperandos.pop();
+            imprimepilaop2();
+            res="r"+num;
+            oper=(String) poperadores.pop();
+            imprimepilaoperadores();
+            model.addRow(new Object[]{num,oper,op1,op2,res});
+            poperandos.push(res);
+            imprimepilaop2();
+            indice++;
+            num++;
+            break;
+           case 2:
+            op2=null;
+            res=(String) poperandos.pop();
+            op1=(String) poperandos.pop();
+            oper=(String) poperadores.pop();
+             model.addRow(new Object[]{num,oper,op1,op2,res});
+             
+            System.out.println(op1+" "+op2+" "+oper+" "+res);
+            poperandos.push(res);
+            indice++;
+            num++;
+            break;
+       }
+    }
+       
 void analiza()
 {
     boolean def=false,iden=false,pcom=false;
@@ -366,6 +456,16 @@ cont=0;
     
     if(reser==34 || pcom==true)
     {
+        if(reser==34)
+        {
+            if(!poperadores.empty())
+            peek=(String) poperadores.peek();
+            if("=".equals(peek))
+            {
+                cuadruplos(2);
+            }
+            
+        }
         
         pcom=true;
         def=false;
@@ -383,7 +483,26 @@ cont=0;
                 tipos.push(tipo);
                 poperandos.push(token);
                 imprimepilaop2();
-                imprimepilatipos();         
+                imprimepilatipos();  
+                if(plus==true)
+                {
+                    cuadruplos(1);
+                    plus=false;
+                   
+                }
+                if(resta==true)
+                {
+                    cuadruplos(1);
+                    resta=false;
+                }
+                if(multi == true)
+                {
+                    cuadruplos(1);
+                    multi=false;
+                }
+                
+                
+                
                 }
                 else
                 {
@@ -393,23 +512,47 @@ cont=0;
                     poperandos.push(token);
                     imprimepilaop2();
                     imprimepilatipos();
+                if(plus==true || igual == true)
+                {
+                    if(plus==true)
+                    {
+                    cuadruplos(1);
+                    plus=false;
+                    }
                 }
+                if(resta==true)
+                {
+                    cuadruplos(1);
+                    resta=false;
+                }
+                if(multi == true)
+                {
+                    cuadruplos(1);
+                    multi=false;
+                }
+                
+                }
+                
             
+                
         }
         if(reser==28)//+
         {
-            System.out.println("+++++");
+            plus=true;
             poperadores.push(token);
             imprimepilaoperadores();
-            System.out.println(""+poperadores.peek());
+            System.out.println("JH"+poperadores.peek());
+            
         }
         if(reser==29)//-
         {
+            resta=true;
             poperadores.push(token);
             imprimepilaoperadores();
         }
         if(reser==30)//*
         {
+            multi=true;
             poperadores.push(token);
             imprimepilaoperadores();
         }
@@ -420,10 +563,12 @@ cont=0;
         }
           if(reser==32)// =
         {
+            igual=true;
             poperadores.push(token);
             imprimepilaoperadores();
         }
     }
+    
     
    
 }
@@ -474,6 +619,10 @@ void imprimepilaop2()
    
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        num=1;
+        tabla.setModel(model);
+        model.setRowCount(0);
+        peek="";
         txttipos.setText("");
         txtoperandos.setText("");
         txterr.setText("");
@@ -527,14 +676,21 @@ void imprimepilaop2()
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabla;
     private javax.swing.JTextPane txta;
     private javax.swing.JTextPane txterr;
     private javax.swing.JTextArea txtoperadores;
