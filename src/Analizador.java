@@ -18,10 +18,10 @@ public class Analizador extends javax.swing.JFrame {
 public Stack <Integer> pE=new Stack <Integer>();
 public Stack  poperadores =new Stack ();
 public Stack  poperandos =new Stack ();
-public Stack  poperandoscompara =new Stack ();
+public Stack  poperandoscompara =new Stack (),poperanco2 = new Stack();
 public Stack  tiposcompara =new Stack ();
 public Stack  tipos =new Stack ();
-String tip="",operando="",operadores="",tipo="",op1="",op2="",oper="",res="";
+String tip="",operando="",operadores="",tipo="",op1="",op2="",oper="",res="",tipoq="",operando1="";
 String err="",peek="";
 int num=1;
 int indice=0; 
@@ -441,14 +441,16 @@ void comparatipos(String a, String b, String o)
        {
            case 1:
             op2=(String) poperandos.pop();
-            int tipo1=poperandoscompara.search(op2);
+            int tipo1=poperanco2.search(op2);
             String compartip=(String) tiposcompara.elementAt(tipo1-1);
             imprimepilaop2();
+            tipos.pop();
             op1=(String) poperandos.pop();
             imprimepilaop2();
-            int tipo2=poperandoscompara.search(op1);
+            int tipo2=poperanco2.search(op1);
             String compartip1=(String) tiposcompara.elementAt(tipo2-1);
             res="r"+num;
+            tipos.pop();
             oper=(String) poperadores.pop();
             JOptionPane.showMessageDialog(null,compartip+" "+compartip1+" "+oper);
             comparatipos(compartip, compartip1, oper);
@@ -459,15 +461,14 @@ void comparatipos(String a, String b, String o)
             indice++;
             num++;
             break;
-           case 2:
+            case 2:
             op2=null;
             res=(String) poperandos.pop();
             op1=(String) poperandos.pop();
             oper=(String) poperadores.pop();
              model.addRow(new Object[]{num,oper,op1,op2,res});
-             
+             tipos.pop();
             System.out.println(op1+" "+op2+" "+oper+" "+res);
-            poperandos.push(res);
             indice++;
             num++;
             break;
@@ -595,19 +596,31 @@ while(st.hasMoreElements())
             }
             
         }
-        pcom=true;
-        def=false;
-        if (reser==34){
+        if(reser==5 || def==true)
+        {
+            def=true;
+            if(reser==34)
+            {def=false;
+            pcom=true;
+            if (reser==34){
         limpiapilaoperandos(); // se vacian las pilas de tipo y de operandos despues de definir las variables
         limpiapilatipos2();
+        }}
         }
+        else{
         
+        def=false;
         if(reser==0)
         {
-           
-                int busquea = poperandoscompara.search(token);
+                while(!poperandoscompara.empty())
+                {
+                    String a=(String)poperandoscompara.pop();
+                    poperanco2.push(a);
+                }
+                int busquea = poperanco2.search(token);
+                
                 if(busquea>=0){// se busva en la pilas de comparacion para determinar
-                System.out.println(busquea);                                               //el tipo para el semantico
+                System.out.println(busquea-1);                                               //el tipo para el semantico
                 tipo=(String) tiposcompara.elementAt(busquea-1);//-1 ya que la funcion search empieza desde 1 y no 0
                 tipos.push(tipo);
                 poperandos.push(token);
@@ -699,12 +712,13 @@ while(st.hasMoreElements())
             imprimepilaoperadores();
         }
     }
-    
+    }
     
    
 }
 
 imprimepilaop2();
+
 
 // 6
 }
@@ -715,6 +729,15 @@ void imprimepilatipos()
     }
     tip+="\n";
     txttipos.setText(tip);
+   
+}
+void imprimepilatiposc()
+{
+    for(int i=0;i<tipos.size();i++){
+        tipoq+=tipos.elementAt(i)+" ";
+    }
+    tipoq+="\n";
+    txtsaltos.setText(tipoq);
    
 }
 void limpiapilatipos2()
@@ -747,6 +770,15 @@ void imprimepilaop2()
     }
     operando+="\n";
     txtoperandos.setText(operando);
+   
+}
+void imprimepilaop3()
+{
+    for(int i=0;i<poperandoscompara.size();i++){
+        operando1+=poperandoscompara.elementAt(i)+" ";
+    }
+    operando1+="\n";
+    txtsaltos.setText("\n"+operando1);
    
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
