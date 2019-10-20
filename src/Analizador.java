@@ -3,6 +3,7 @@ import java.util.Stack;
 import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.bind.DatatypeConverter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,13 +21,15 @@ public Stack  poperadores =new Stack ();
 public Stack  poperandos =new Stack ();
 public Stack  poperandoscompara =new Stack (),poperanco2 = new Stack();
 public Stack  tiposcompara =new Stack ();
+public Stack  psaltos =new Stack ();
 public Stack  tipos =new Stack ();
-String tip="",operando="",operadores="",tipo="",op1="",op2="",oper="",res="",tipoq="",operando1="";
+String tip="",operando="",operadores="",tipo="",op1="",op2="",oper="",res="",tipoq="",operando1="",saltos="",resTipo="";
 String err="",peek="";
-int num=1;
-int indice=0; 
+int num=1,tipo1=0;
+int indice=1; 
 String [] variable;
-boolean plus=false,resta=false,multi=false,divi=false,igual=false;
+boolean plus=false,resta=false,multi=false,divi=false,igual=false,men=false,may=false,WHILE=false,
+        meni=false,mayi=false,difde=false,If=false,forr=false,whilee=false,elsee=false,endif=false,Endw=false;
                                 //OP1 OP2 +-*  /  d.m rec and nor or
 static int [][] matrizDeTipos  ={{138,138,138,139,138,142,544},
                                  {138,139,139,139,544,142,544},
@@ -315,123 +318,181 @@ String[] columnNames = {"#", "OPER", "OP1", "OP2", "RES"};
                 case "<=":
                     return 38;
                 case "!=":
-                    return 36;
+                    return 39;
                 
             }
         return 0;
 }
-void comparatipos(String a, String b, String o)
-{
-    /*
+void comparatipos(String a, String b, String o) {
+        /*
     e=1
     f=2
     c=3
     s=4
-    */
-    JOptionPane.showMessageDialog(null,a+" "+b+" "+o);
-    if("integer".equals(a) && "integer".equals(b) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o) ))
-    {
-        err+="Error entre tipos \n";
+         */
+        JOptionPane.showMessageDialog(null, a + " " + b + " " + o);
+	
+	//ERRORES
+	
+        if ("integer".equals(a) && "integer".equals(b) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o))) {
+            err += "Error entre tipos \n";
+        }
+        if ("integer".equals(a) && "float".equals(b) && ("mod".equals(o)) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o))) {
+            err += "Error entre tipos \n";
+        }
+        if ("integer".equals(a) && "char".equals(b)) {
+            err += "Error entre tipos \n";
+        }
+        if ("integer".equals(a) && "string".equals(b)) {
+            err += "Error entre tipos \n";
+        }
+        if ("integer".equals(a) && "boolean".equals(b)) {
+            err += "Error entre tipos \n";
+        }
+        if ("float".equals(a) && "integer".equals(b) && ("mod".equals(o)) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o))) {
+            err += "Error entre tipos \n";
+        }
+        if ("float".equals(a) && "float".equals(b) && ("mod".equals(o)) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o))) {
+            err += "Error entre tipos \n";
+        }
+        if ("float".equals(a) && "char".equals(b)) {
+            err += "Error entre tipos \n";
+        }
+        if ("float".equals(a) && "string".equals(b)) {
+            err += "Error entre tipos \n";
+        }
+        if ("float".equals(a) && "boolean".equals(b)) {
+            err += "Error entre tipos \n";
+        }
+        if ("char".equals(a) && "integer".equals(b)) {
+            err += "Error entre tipos \n";
+        }
+        if ("char".equals(a) && "float".equals(b)) {
+            err += "Error entre tipos \n";
+        }
+        if ("char".equals(a) && "char".equals(b) && ("*".equals(o) || "+".equals(o)) || ("-".equals(o) || "/".equals(o)) && ("mod".equals(o)) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o))) {
+            err += "Error entre tipos \n";
+        }
+        if ("char".equals(a) && "string".equals(b) && ("*".equals(o) || "+".equals(o)) || ("-".equals(o) || "/".equals(o)) && ("mod".equals(o)) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o))) {
+            err += "Error entre tipos \n";
+        }
+        if ("char".equals(a) && "boolean".equals(b)) {
+            err += "Error entre tipos \n";
+        }
+        if ("string" == a && "integer" == b) {
+            err += "Error entre tipos \n";
+
+        }
+        if ("string".equals(a) && "flotante".equals(b)) {
+            err += "Error entre tipos \n";
+        }
+        if ("string".equals(a) && "char".equals(b) && ("*".equals(o) || "+".equals(o)) || ("-".equals(o) || "/".equals(o)) && ("mod".equals(o)) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o))) {
+            err += "Error entre tipos \n";
+        }
+        if ("string".equals(a) && "string".equals(b) && ("*".equals(o) || "+".equals(o)) || ("-".equals(o) || "/".equals(o)) && ("mod".equals(o)) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o))) {
+            err += "Error entre tipos \n";
+        }
+        if ("string".equals(a) && "boolean".equals(b)) {
+            err += "Error entre tipos \n";
+        }
+        if ("boolean".equals(a) && "integer".equals(b)) {
+            err += "Error entre tipos \n";
+        }
+        if ("boolean".equals(a) && "flotante".equals(b)) {
+            err += "Error entre tipos \n";
+        }
+        if ("boolean".equals(a) && "char".equals(b)) {
+            err += "Error entre tipos \n";
+        }
+        if ("boolean".equals(a) && "string".equals(b)) {
+            err += "Error entre tipos \n";
+        }
+        if ("boolean".equals(a) && "boolean".equals(b) && ("*".equals(o) || "+".equals(o)) || ("-".equals(o) || "/".equals(o)) && ("mod".equals(o))) {
+            err += "Error entre tipos \n";
+        }
+
+	
+	//Tipos de resultado
+
+	//Integer
+	
+	if ("integer".equals(a) && "integer".equals(b) && ("*".equals(o) || "+".equals(o) || "-".equals(o) || "mod".equals(o))) {
+            
+	resTipo = "integer";
+
+        }
+	
+	if ("integer".equals(a) && "integer".equals(b) && "/".equals(o)) {
+            
+	resTipo = "float";
+
+        }
+
+	if ("integer".equals(a) && "integer".equals(b) && ("==".equals(o) || "<".equals(o) || ">".equals(o) || "<=".equals(o) || ">=".equals(o))) {
+            
+	resTipo = "boolean";
+
+        }
+
+	if ("integer".equals(a) && "float".equals(b) && ("*".equals(o) || "+".equals(o) || "-".equals(o) || "/".equals(o))) {
+            
+	resTipo = "float";
+
+        }
+	
+	if ("integer".equals(a) && "float".equals(b) && ("==".equals(o) || "<".equals(o) || ">".equals(o) || "<=".equals(o) || ">=".equals(o))) {
+            
+	resTipo = "boolean";
+
+        }
+	
+	//Float
+	if ("float".equals(a) && "integer".equals(b) && ("*".equals(o) || "+".equals(o) || "-".equals(o) || "/".equals(o))) {
+            
+	resTipo = "float";
+
+        }
+	
+	if ("float".equals(a) && "integer".equals(b) && ("==".equals(o) || "<".equals(o) || ">".equals(o) || "<=".equals(o) || ">=".equals(o))) {
+            
+	resTipo = "boolean";
+
+        }
+	
+	//Char
+	if ("char".equals(a) && "char".equals(b) && ("==".equals(o) || "<".equals(o) || ">".equals(o) || "<=".equals(o) || ">=".equals(o))) {
+            
+	resTipo = "boolean";
+
+        }
+	
+	if ("char".equals(a) && "string".equals(b) && ("==".equals(o) || "<".equals(o) || ">".equals(o) || "<=".equals(o) || ">=".equals(o))) {
+            
+	resTipo = "boolean";
+
+        }
+	
+	//String
+	if ("string".equals(a) && "char".equals(b) && ("==".equals(o) || "<".equals(o) || ">".equals(o) || "<=".equals(o) || ">=".equals(o))) {
+            
+	resTipo = "boolean";
+
+        }
+	
+	if ("string".equals(a) && "string".equals(b) && ("==".equals(o) || "<".equals(o) || ">".equals(o) || "<=".equals(o) || ">=".equals(o))) {
+            
+	resTipo = "boolean";
+
+        }
+	
+	//Boolean
+	if ("boolean".equals(a) && "boolean".equals(b) && ("==".equals(o) || "<".equals(o) || ">".equals(o) || "<=".equals(o) || ">=".equals(o) || "AND".equals(o) || "NOR".equals(o) || "OR".equals(o))) {
+            
+	resTipo = "boolean";
+
+        }
+
     }
-    if("integer".equals(a) && "float".equals(b) && ("mod".equals(o))&& ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o)))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("integer".equals(a) && "char".equals(b))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("integer".equals(a) && "string".equals(b))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("integer".equals(a) && "boolean".equals(b))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("float".equals(a) && "integer".equals(b) && ("mod".equals(o))&& ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o)))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("float".equals(a) && "float".equals(b) && ("mod".equals(o))&& ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o)))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("float".equals(a) && "char".equals(b))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("float".equals(a) && "string".equals(b))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("float".equals(a) && "boolean".equals(b))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("char".equals(a) && "integer".equals(b))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("char".equals(a) && "float".equals(b))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("char".equals(a) && "char".equals(b) && ("*".equals(o) || "+".equals(o)) || ("-".equals(o) || "/".equals(o)) && ("mod".equals(o)) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o)))
-    {
-      err+="Error entre tipos \n";
-    }
-    if("char".equals(a) && "string".equals(b) && ("*".equals(o) || "+".equals(o)) || ("-".equals(o) || "/".equals(o)) && ("mod".equals(o)) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o)))
-    {
-      err+="Error entre tipos \n";
-    }
-    if("char".equals(a) && "boolean".equals(b))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("string"==a && "integer"==b)
-    {
-        err+="Error entre tipos \n";
-       
-    }
-    if("string".equals(a) && "flotante".equals(b))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("string".equals(a) && "char".equals(b) && ("*".equals(o) || "+".equals(o)) || ("-".equals(o) || "/".equals(o)) && ("mod".equals(o)) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o)))
-    {
-      err+="Error entre tipos \n";
-    }
-    if("string".equals(a) && "string".equals(b) && ("*".equals(o) || "+".equals(o)) || ("-".equals(o) || "/".equals(o)) && ("mod".equals(o)) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o)))
-    {
-      err+="Error entre tipos \n";
-    }
-    if("string".equals(a) && "boolean".equals(b))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("boolean".equals(a) && "integer".equals(b))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("boolean".equals(a) && "flotante".equals(b))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("boolean".equals(a) && "char".equals(b))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("boolean".equals(a) && "string".equals(b))
-    {
-        err+="Error entre tipos \n";
-    }
-    if("boolean".equals(a) && "boolean".equals(b) && ("*".equals(o) || "+".equals(o)) || ("-".equals(o) || "/".equals(o)) && ("mod".equals(o)))
-    {
-      err+="Error entre tipos \n";
-    }
-    
-}
     void cuadruplos(int a)
     {
         
@@ -445,33 +506,84 @@ void comparatipos(String a, String b, String o)
             String compartip=(String) tiposcompara.elementAt(tipo1-1);
             imprimepilaop2();
             tipos.pop();
+            imprimepilatipos();
             op1=(String) poperandos.pop();
             imprimepilaop2();
             int tipo2=poperanco2.search(op1);
             String compartip1=(String) tiposcompara.elementAt(tipo2-1);
-            res="r"+num;
+            res="r"+indice;
             tipos.pop();
+            imprimepilatipos();
             oper=(String) poperadores.pop();
-            JOptionPane.showMessageDialog(null,compartip+" "+compartip1+" "+oper);
+            
             comparatipos(compartip, compartip1, oper);
             imprimepilaoperadores();
             model.addRow(new Object[]{num,oper,op1,op2,res});
             poperandos.push(res);
+            tipos.push(resTipo);
             imprimepilaop2();
             indice++;
             num++;
             break;
+            
             case 2:
             op2=null;
             res=(String) poperandos.pop();
+            tipos.pop();
             op1=(String) poperandos.pop();
+            tipos.pop();
             oper=(String) poperadores.pop();
-             model.addRow(new Object[]{num,oper,op1,op2,res});
-             tipos.pop();
+            model.addRow(new Object[]{num,oper,op1,op2,res});
+            tipos.pop();
+            imprimepilatipos();
             System.out.println(op1+" "+op2+" "+oper+" "+res);
-            indice++;
-            num++;
+            
             break;
+            //Acciones IF
+            case 3:
+                op2=null;
+                op1=(String) poperandos.pop();
+                res=null;
+                oper="SF";
+                model.addRow(new Object[]{num,oper,op1,op2,res});
+                psaltos.push(num);
+                imprimepilasaltos();
+                num++;
+            break;
+            case 4:
+                op2=null;
+                op1=null;
+                res=null;
+                oper="SI";
+                int salto=(int) psaltos.pop();
+                imprimepilasaltos();
+                model.setValueAt(num+1, salto-1, 4);
+                model.addRow(new Object[]{num,oper,op1,op2,res});
+                psaltos.push(num);
+                imprimepilasaltos();
+                num++;
+                break;
+            case 5:
+                poperadores.pop();
+                salto=(int) psaltos.pop();
+                imprimepilasaltos();
+                model.setValueAt(num+1, salto-1, 4);
+                num++;
+                break;
+                //Acciones While
+            case 6:
+                op2=null;
+                op1=null;
+                oper="SI";
+                salto=(int) psaltos.pop();
+                imprimepilasaltos();
+                model.setValueAt(num+1, salto-1, 4);
+                model.addRow(new Object[]{num,oper,op1,op2,salto-1});
+                num++;
+                break;
+                
+                
+                
        }
     }
        
@@ -506,8 +618,6 @@ while(st.hasMoreElements())
                         if(a==true)
                         {
                             err+="Error Variable "+token+" ya inicializada \n";
-                            
-                            
                             
                         }
                         else
@@ -610,8 +720,38 @@ while(st.hasMoreElements())
         else{
         
         def=false;
-        if(reser==0)
+        if(reser==12)//if
+            {
+                If=true;
+                poperadores.push("$");//$ utilizado como fondo falso del if
+            }
+        if(reser==14)//else
+            {
+                elsee=true;
+                cuadruplos(4);
+            }
+        if(reser==13)//endif
+            {
+                endif=true;
+                cuadruplos(5);
+            }
+        if(reser==16)//while
+            {
+                WHILE=true;
+                psaltos.push(num);
+                
+            }
+        if(reser==15)//ENDwhile
+            {
+                cuadruplos(6);
+
+            }
+        
+        
+        
+        if(reser==0)//si es identificador o palabra reservada if
         {
+            
                 while(!poperandoscompara.empty())
                 {
                     String a=(String)poperandoscompara.pop();
@@ -626,25 +766,30 @@ while(st.hasMoreElements())
                 poperandos.push(token);
                 imprimepilaop2();
                 imprimepilatipos();  
-                if(plus==true)
+                if(plus==true || resta==true || multi == true || men==true || may==true || meni==true || mayi==true || difde==true)
                 {
+                 
                     cuadruplos(1);
                     plus=false;
+                    multi=false;
+                    resta=false;
+                    men=false;
+                    may=false;
+                    mayi=false;meni=false;difde=false;
+                    if(If==true)
+                    {
+                        cuadruplos(3);
+                        If=false;
+                    }
+                    if(WHILE==true)
+                    {
+                        cuadruplos(3);
+                        WHILE=false;
+                    }
                    
                 }
-                if(resta==true)
-                {
-                    cuadruplos(1);
-                    resta=false;
-                }
-                if(multi == true)
-                {
-                    cuadruplos(1);
-                    multi=false;
-                }
                 
-                
-                
+
                 }
                 else
                 {
@@ -656,24 +801,30 @@ while(st.hasMoreElements())
                     tiposcompara.push("integer");
                     imprimepilaop2();
                     imprimepilatipos();
-                if(plus==true || igual == true)
+                    if(plus==true || resta==true || multi == true || men==true || may==true || meni==true || mayi==true || difde==true)
                 {
-                    if(plus==true)
-                    {
+                    
                     cuadruplos(1);
                     plus=false;
-                    }
-                }
-                if(resta==true)
-                {
-                    cuadruplos(1);
-                    resta=false;
-                }
-                if(multi == true)
-                {
-                    cuadruplos(1);
                     multi=false;
+                    resta=false;
+                    men=false;
+                    may=false;
+                    mayi=false;meni=false;difde=false;
+                    if(If==true)
+                    {
+                        cuadruplos(3);
+                        If=false;
+                    }
+                    if(If==true)
+                    {
+                        cuadruplos(3);
+                        If=false;
+                    }
+                    
                 }
+                    
+
                 
                 }
                 
@@ -711,6 +862,36 @@ while(st.hasMoreElements())
             poperadores.push(token);
             imprimepilaoperadores();
         }
+          if(reser==35)// <
+        {
+            men=true;
+            poperadores.push(token);
+            imprimepilaoperadores();
+        }
+            if(reser==36)// >
+        {
+            may=true;
+            poperadores.push(token);
+            imprimepilaoperadores();
+        }
+              if(reser==37)// >=
+        {
+            mayi=true;
+            poperadores.push(token);
+            imprimepilaoperadores();
+        }
+                if(reser==38)// <=
+        {
+            meni=true;
+            poperadores.push(token);
+            imprimepilaoperadores();
+        }
+                if(reser==39)// !=
+        {
+            difde=true;
+            poperadores.push(token);
+            imprimepilaoperadores();
+        }
     }
     }
     
@@ -729,6 +910,15 @@ void imprimepilatipos()
     }
     tip+="\n";
     txttipos.setText(tip);
+   
+}
+void imprimepilasaltos()
+{
+    for(int i=0;i<psaltos.size();i++){
+        saltos+=psaltos.elementAt(i)+" ";
+    }
+    saltos+="\n";
+    txtsaltos.setText(saltos);
    
 }
 void imprimepilatiposc()
@@ -782,6 +972,7 @@ void imprimepilaop3()
    
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        saltos="";
         err="";
         num=1;
         tabla.setModel(model);
@@ -799,6 +990,7 @@ void imprimepilaop3()
         poperandoscompara.clear();
         tiposcompara.clear();
         tipos.clear();
+        psaltos.clear();
         analiza();
         txterr.setText(err);// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed

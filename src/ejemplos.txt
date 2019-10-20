@@ -1,0 +1,10 @@
+class frfd
+begin
+def A , B as integer ;
+def s , d as string ;
+while A < B
+if A > B
+A = B ;
+endif
+endwhile
+end
