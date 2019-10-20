@@ -1,0 +1,8 @@
+class frfd
+begin
+def A , B as integer ;
+def s , d as string ;
+
+A = B ;
+
+end
