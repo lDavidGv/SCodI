@@ -27,6 +27,7 @@ int num=1;
 int indice=0; 
 String [] variable;
 boolean plus=false,resta=false,multi=false,divi=false,igual=false;
+                                //OP1 OP2 +-*  /  d.m rec and nor or
 static int [][] matrizDeTipos  ={{138,138,138,139,138,142,544},
                                  {138,139,139,139,544,142,544},
                                  {138,140,544,544,544,544,544},
@@ -305,9 +306,131 @@ String[] columnNames = {"#", "OPER", "OP1", "OP2", "RES"};
                     return 33;
                 case ";":
                     return 34;
+                case "<":
+                    return 35;
+                case ">":
+                    return 36;
+                case ">=":
+                    return 37;
+                case "<=":
+                    return 38;
+                case "!=":
+                    return 36;
                 
             }
         return 0;
+}
+void comparatipos(String a, String b, String o)
+{
+    /*
+    e=1
+    f=2
+    c=3
+    s=4
+    */
+    JOptionPane.showMessageDialog(null,a+" "+b+" "+o);
+    if("integer".equals(a) && "integer".equals(b) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o) ))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("integer".equals(a) && "float".equals(b) && ("mod".equals(o))&& ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o)))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("integer".equals(a) && "char".equals(b))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("integer".equals(a) && "string".equals(b))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("integer".equals(a) && "boolean".equals(b))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("float".equals(a) && "integer".equals(b) && ("mod".equals(o))&& ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o)))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("float".equals(a) && "float".equals(b) && ("mod".equals(o))&& ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o)))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("float".equals(a) && "char".equals(b))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("float".equals(a) && "string".equals(b))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("float".equals(a) && "boolean".equals(b))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("char".equals(a) && "integer".equals(b))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("char".equals(a) && "float".equals(b))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("char".equals(a) && "char".equals(b) && ("*".equals(o) || "+".equals(o)) || ("-".equals(o) || "/".equals(o)) && ("mod".equals(o)) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o)))
+    {
+      err+="Error entre tipos \n";
+    }
+    if("char".equals(a) && "string".equals(b) && ("*".equals(o) || "+".equals(o)) || ("-".equals(o) || "/".equals(o)) && ("mod".equals(o)) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o)))
+    {
+      err+="Error entre tipos \n";
+    }
+    if("char".equals(a) && "boolean".equals(b))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("string"==a && "integer"==b)
+    {
+        err+="Error entre tipos \n";
+       
+    }
+    if("string".equals(a) && "flotante".equals(b))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("string".equals(a) && "char".equals(b) && ("*".equals(o) || "+".equals(o)) || ("-".equals(o) || "/".equals(o)) && ("mod".equals(o)) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o)))
+    {
+      err+="Error entre tipos \n";
+    }
+    if("string".equals(a) && "string".equals(b) && ("*".equals(o) || "+".equals(o)) || ("-".equals(o) || "/".equals(o)) && ("mod".equals(o)) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o)))
+    {
+      err+="Error entre tipos \n";
+    }
+    if("string".equals(a) && "boolean".equals(b))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("boolean".equals(a) && "integer".equals(b))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("boolean".equals(a) && "flotante".equals(b))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("boolean".equals(a) && "char".equals(b))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("boolean".equals(a) && "string".equals(b))
+    {
+        err+="Error entre tipos \n";
+    }
+    if("boolean".equals(a) && "boolean".equals(b) && ("*".equals(o) || "+".equals(o)) || ("-".equals(o) || "/".equals(o)) && ("mod".equals(o)))
+    {
+      err+="Error entre tipos \n";
+    }
+    
 }
     void cuadruplos(int a)
     {
@@ -317,14 +440,18 @@ String[] columnNames = {"#", "OPER", "OP1", "OP2", "RES"};
        switch(a)
        {
            case 1:
-            
-            
             op2=(String) poperandos.pop();
+            int tipo1=poperandoscompara.search(op2);
+            String compartip=(String) tiposcompara.elementAt(tipo1-1);
             imprimepilaop2();
             op1=(String) poperandos.pop();
             imprimepilaop2();
+            int tipo2=poperandoscompara.search(op1);
+            String compartip1=(String) tiposcompara.elementAt(tipo2-1);
             res="r"+num;
             oper=(String) poperadores.pop();
+            JOptionPane.showMessageDialog(null,compartip+" "+compartip1+" "+oper);
+            comparatipos(compartip, compartip1, oper);
             imprimepilaoperadores();
             model.addRow(new Object[]{num,oper,op1,op2,res});
             poperandos.push(res);
@@ -366,7 +493,7 @@ while(st.hasMoreElements())
 
     if(reser==5 || def==true)
             {
-               System.out.println("def"+cont);
+               System.out.println("def"+" true");
                def=true;
                  if(reser==0 || iden==true)
                  {
@@ -378,7 +505,9 @@ while(st.hasMoreElements())
                         if(a==true)
                         {
                             err+="Error Variable "+token+" ya inicializada \n";
-                            txterr.setText(err);
+                            
+                            
+                            
                         }
                         else
                         {
@@ -403,7 +532,7 @@ while(st.hasMoreElements())
                             
                         }
 
-cont=0;
+                    cont=0;
                     }
                     if(reser==8)
                     {
@@ -433,7 +562,7 @@ cont=0;
                         for(int i=0;i<cont;i++)
                         {
                             tipos.push("string");
-                            tiposcompara.push("String");
+                            tiposcompara.push("string");
                             imprimepilatipos();
                         }
                       cont=0;
@@ -466,13 +595,13 @@ cont=0;
             }
             
         }
-        
         pcom=true;
         def=false;
         if (reser==34){
         limpiapilaoperandos(); // se vacian las pilas de tipo y de operandos despues de definir las variables
         limpiapilatipos2();
         }
+        
         if(reser==0)
         {
            
@@ -507,9 +636,11 @@ cont=0;
                 else
                 {
                     err+= "Varible "+token+ " no definida \n";
-                    txterr.setText(err);
+                    
                     tipos.push("integer");
                     poperandos.push(token);
+                    poperandoscompara.push(token);
+                    tiposcompara.push("integer");
                     imprimepilaop2();
                     imprimepilatipos();
                 if(plus==true || igual == true)
@@ -619,6 +750,7 @@ void imprimepilaop2()
    
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        err="";
         num=1;
         tabla.setModel(model);
         model.setRowCount(0);
@@ -635,7 +767,8 @@ void imprimepilaop2()
         poperandoscompara.clear();
         tiposcompara.clear();
         tipos.clear();
-        analiza(); // TODO add your handling code here:
+        analiza();
+        txterr.setText(err);// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
