@@ -8,3 +8,24 @@ A = B ;
 endif
 endwhile
 end
+
+class frfd
+begin
+def A , B as integer ;
+for ( A = 0 : A < 2 )
+A = B ;
+endfor
+end
+
+class frfd
+begin
+def A , B as integer ;
+def s , d as string ;
+while A < B
+if A > B
+for ( A = 0 : A < 2 )
+A = B ;
+endfor
+endif
+endwhile
+end

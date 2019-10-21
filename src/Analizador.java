@@ -239,6 +239,10 @@ String[] columnNames = {"#", "OPER", "OP1", "OP2", "RES"};
     
     int reservadas(String reservada)
 {
+    
+   
+
+   
      switch (reservada)
             {
                 case "import":
@@ -319,6 +323,15 @@ String[] columnNames = {"#", "OPER", "OP1", "OP2", "RES"};
                     return 38;
                 case "!=":
                     return 39;
+                case "(":
+                    return 40;
+                case ")":
+                    return 41;
+                case ":":
+                    return 42;
+                case "1":return 43;case "2":return 43;case "3":return 43;case "4":return 43;case "5":return 43;
+                case "10":return 43;case "9":return 43;case "8":return 43;case "7":return 43;case "6":return 43;case "0":return 43;
+                
                 
             }
         return 0;
@@ -411,7 +424,6 @@ void comparatipos(String a, String b, String o) {
             err += "Error entre tipos \n";
         }
 
-	
 	//Tipos de resultado
 
 	//Integer
@@ -493,6 +505,38 @@ void comparatipos(String a, String b, String o) {
         }
 
     }
+void asignatipos(String a,String b, String o)
+{
+    JOptionPane.showMessageDialog(null,a+ b +o);
+    if ("integer".equals(a) && "integer".equals(b) && "=".equals(o)) {
+            resTipo = "integer";
+        }
+    else if ("integer".equals(a) && "float".equals(b) && "=".equals(o)) {
+            resTipo = "float";
+        }
+    else if ("string".equals(a) && "string".equals(b) && "=".equals(o)) {
+            resTipo = "string";
+        }
+    else if ("string".equals(a) && "char".equals(b) && "=".equals(o)) {
+            resTipo = "string";
+        }
+    else if ("char".equals(a) && "char".equals(b) && "=".equals(o)) {
+            resTipo = "char";
+        }
+    else if ("float".equals(a) && "float".equals(b) && "=".equals(o)) {
+            resTipo = "float";
+        }
+    else if ("float".equals(a) && "integer".equals(b) && "=".equals(o)) {
+            resTipo = "float";
+        }
+    else if ("boolean".equals(a) && "boolean".equals(b) && "=".equals(o)) {
+            resTipo = "boolean";
+        }
+    else
+    {
+        err+="Error";
+    }
+}
     void cuadruplos(int a)
     {
         
@@ -515,12 +559,13 @@ void comparatipos(String a, String b, String o) {
             tipos.pop();
             imprimepilatipos();
             oper=(String) poperadores.pop();
-            
+            imprimepilaoperadores();
             comparatipos(compartip, compartip1, oper);
             imprimepilaoperadores();
             model.addRow(new Object[]{num,oper,op1,op2,res});
             poperandos.push(res);
             tipos.push(resTipo);
+            imprimepilatipos();
             imprimepilaop2();
             indice++;
             num++;
@@ -530,19 +575,27 @@ void comparatipos(String a, String b, String o) {
             op2=null;
             res=(String) poperandos.pop();
             tipos.pop();
+            imprimepilatipos();
+            imprimepilaop2();
             op1=(String) poperandos.pop();
-            tipos.pop();
-            oper=(String) poperadores.pop();
-            model.addRow(new Object[]{num,oper,op1,op2,res});
+            
             tipos.pop();
             imprimepilatipos();
-            System.out.println(op1+" "+op2+" "+oper+" "+res);
+            imprimepilaop2();
+            oper=(String) poperadores.pop();
+            imprimepilaoperadores();
+            model.addRow(new Object[]{num,oper,op1,op2,res});
             
+            imprimepilatipos();
+            System.out.println(op1+" "+op2+" "+oper+" "+res);
+            num++;
             break;
             //Acciones IF
             case 3:
                 op2=null;
                 op1=(String) poperandos.pop();
+                tipos.pop();
+                imprimepilaop2();
                 res=null;
                 oper="SF";
                 model.addRow(new Object[]{num,oper,op1,op2,res});
@@ -557,7 +610,7 @@ void comparatipos(String a, String b, String o) {
                 oper="SI";
                 int salto=(int) psaltos.pop();
                 imprimepilasaltos();
-                model.setValueAt(num+1, salto-1, 4);
+                model.setValueAt(num, salto-1, 4);
                 model.addRow(new Object[]{num,oper,op1,op2,res});
                 psaltos.push(num);
                 imprimepilasaltos();
@@ -565,10 +618,11 @@ void comparatipos(String a, String b, String o) {
                 break;
             case 5:
                 poperadores.pop();
+                imprimepilaoperadores();
                 salto=(int) psaltos.pop();
                 imprimepilasaltos();
-                model.setValueAt(num+1, salto-1, 4);
-                num++;
+                model.setValueAt(num, salto-1, 4);
+                
                 break;
                 //Acciones While
             case 6:
@@ -577,10 +631,41 @@ void comparatipos(String a, String b, String o) {
                 oper="SI";
                 salto=(int) psaltos.pop();
                 imprimepilasaltos();
-                model.setValueAt(num+1, salto-1, 4);
+                model.setValueAt(num, salto-1, 4);
                 model.addRow(new Object[]{num,oper,op1,op2,salto-1});
                 num++;
                 break;
+            case 7:
+                op2=null;
+                op1=(String) poperandos.pop();
+                tipos.pop();
+                imprimepilatipos();
+                imprimepilaop2();
+                res=null;
+                oper="SV";
+                model.addRow(new Object[]{num,oper,op1,op2,res});
+                psaltos.push(num);
+                imprimepilasaltos();
+                num++;
+            break;
+            case 8:
+            op2=null;
+            res=(String) poperandos.pop();
+            tipos.pop();
+            imprimepilatipos();
+            imprimepilaop2();
+            op1=(String) poperandos.pop();
+            tipos.pop();
+            imprimepilatipos();
+            imprimepilaop2();
+            oper=(String) poperadores.pop();
+            imprimepilaoperadores();
+            model.addRow(new Object[]{num,oper,op1,op2,res});
+            imprimepilatipos();
+            
+            num++;
+            break;
+                
                 
                 
                 
@@ -684,6 +769,7 @@ while(st.hasMoreElements())
                         for(int i=0;i<cont;i++)
                         {
                             tipos.push("boolean");
+                            imprimepilatipos();
                         }
 
                         cont=0;
@@ -718,12 +804,22 @@ while(st.hasMoreElements())
         }}
         }
         else{
-        
+        if(reser==43)
+        {
+            poperandos.push(token);
+            imprimepilaop2();
+            poperandoscompara.push(token);
+            tipos.push("integer");
+            imprimepilatipos();
+            tiposcompara.push("integer");
+            
+        }
         def=false;
         if(reser==12)//if
             {
                 If=true;
-                poperadores.push("$");//$ utilizado como fondo falso del if
+                poperadores.push("$");
+                imprimepilaoperadores();//$ utilizado como fondo falso del if
             }
         if(reser==14)//else
             {
@@ -746,6 +842,19 @@ while(st.hasMoreElements())
                 cuadruplos(6);
 
             }
+        if(reser==18)//For
+            {
+                forr=true;
+            }
+        if(reser==17)//endfor
+            {
+                cuadruplos(6);
+
+            }
+        if(reser==42)//:
+            {
+                cuadruplos(8);
+            }
         
         
         
@@ -763,9 +872,10 @@ while(st.hasMoreElements())
                 System.out.println(busquea-1);                                               //el tipo para el semantico
                 tipo=(String) tiposcompara.elementAt(busquea-1);//-1 ya que la funcion search empieza desde 1 y no 0
                 tipos.push(tipo);
+                imprimepilatipos();
                 poperandos.push(token);
                 imprimepilaop2();
-                imprimepilatipos();  
+                
                 if(plus==true || resta==true || multi == true || men==true || may==true || meni==true || mayi==true || difde==true)
                 {
                  
@@ -786,6 +896,12 @@ while(st.hasMoreElements())
                         cuadruplos(3);
                         WHILE=false;
                     }
+                    if(forr==true)
+                    {
+                        cuadruplos(7);
+                        forr=false;
+                        
+                    }
                    
                 }
                 
@@ -796,6 +912,7 @@ while(st.hasMoreElements())
                     err+= "Varible "+token+ " no definida \n";
                     
                     tipos.push("integer");
+                    
                     poperandos.push(token);
                     poperandoscompara.push(token);
                     tiposcompara.push("integer");
@@ -974,6 +1091,7 @@ void imprimepilaop3()
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         saltos="";
         err="";
+        indice=1;
         num=1;
         tabla.setModel(model);
         model.setRowCount(0);
