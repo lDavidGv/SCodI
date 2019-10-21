@@ -343,8 +343,7 @@ void comparatipos(String a, String b, String o) {
     c=3
     s=4
          */
-        JOptionPane.showMessageDialog(null, a + " " + b + " " + o);
-	
+        
 	//ERRORES
 	
         if ("integer".equals(a) && "integer".equals(b) && ("AND".equals(o) || "NOR".equals(o) || "OR".equals(o))) {
@@ -507,7 +506,7 @@ void comparatipos(String a, String b, String o) {
     }
 void asignatipos(String a,String b, String o)
 {
-    JOptionPane.showMessageDialog(null,a+ b +o);
+   
     if ("integer".equals(a) && "integer".equals(b) && "=".equals(o)) {
             resTipo = "integer";
         }
@@ -547,6 +546,17 @@ void asignatipos(String a,String b, String o)
            case 1:
             op2=(String) poperandos.pop();
             int tipo1=poperanco2.search(op2);
+            if(tipo1==-1)
+            {
+                
+                poperanco2.push(op2);
+                
+                tiposcompara.push("integer");
+                
+            }
+            tipo1=poperanco2.search(op2);
+            
+            
             String compartip=(String) tiposcompara.elementAt(tipo1-1);
             imprimepilaop2();
             tipos.pop();
@@ -569,9 +579,10 @@ void asignatipos(String a,String b, String o)
             imprimepilaop2();
             indice++;
             num++;
+            
             break;
             
-            case 2:
+            case 2://ASIGNA
             op2=null;
             res=(String) poperandos.pop();
             tipos.pop();
@@ -587,7 +598,7 @@ void asignatipos(String a,String b, String o)
             model.addRow(new Object[]{num,oper,op1,op2,res});
             
             imprimepilatipos();
-            System.out.println(op1+" "+op2+" "+oper+" "+res);
+           
             num++;
             break;
             //Acciones IF
@@ -622,7 +633,6 @@ void asignatipos(String a,String b, String o)
                 salto=(int) psaltos.pop();
                 imprimepilasaltos();
                 model.setValueAt(num, salto-1, 4);
-                
                 break;
                 //Acciones While
             case 6:
@@ -691,7 +701,7 @@ while(st.hasMoreElements())
 
     if(reser==5 || def==true)
             {
-               System.out.println("def"+" true");
+               
                def=true;
                  if(reser==0 || iden==true)
                  {
@@ -716,10 +726,10 @@ while(st.hasMoreElements())
 
                     }
 
-                    if(reser==7)
+                    if(reser==7)//INTEGER
                     {
                        
-                        System.out.println("cont"+cont);
+                        
                         for(int i=0;i<cont;i++)
                         {
                             tipos.push("integer");
@@ -769,6 +779,7 @@ while(st.hasMoreElements())
                         for(int i=0;i<cont;i++)
                         {
                             tipos.push("boolean");
+                            tiposcompara.push("bolean");
                             imprimepilatipos();
                         }
 
@@ -809,10 +820,9 @@ while(st.hasMoreElements())
             poperandos.push(token);
             imprimepilaop2();
             poperandoscompara.push(token);
-            tipos.push("integer");
+            tipos.push("integer");            //
             imprimepilatipos();
             tiposcompara.push("integer");
-            
         }
         def=false;
         if(reser==12)//if
@@ -863,13 +873,13 @@ while(st.hasMoreElements())
             
                 while(!poperandoscompara.empty())
                 {
-                    String a=(String)poperandoscompara.pop();
+                    String a=(String)poperandoscompara.pop();//INVERTIR PILA
                     poperanco2.push(a);
                 }
-                int busquea = poperanco2.search(token);
+                int busquea = poperanco2.search(token);//
                 
                 if(busquea>=0){// se busva en la pilas de comparacion para determinar
-                System.out.println(busquea-1);                                               //el tipo para el semantico
+                                             //el tipo para el semantico
                 tipo=(String) tiposcompara.elementAt(busquea-1);//-1 ya que la funcion search empieza desde 1 y no 0
                 tipos.push(tipo);
                 imprimepilatipos();
@@ -953,7 +963,7 @@ while(st.hasMoreElements())
             plus=true;
             poperadores.push(token);
             imprimepilaoperadores();
-            System.out.println("JH"+poperadores.peek());
+            
             
         }
         if(reser==29)//-
@@ -1015,7 +1025,7 @@ while(st.hasMoreElements())
    
 }
 
-imprimepilaop2();
+
 
 
 // 6
@@ -1089,6 +1099,7 @@ void imprimepilaop3()
    
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        poperanco2.clear();
         saltos="";
         err="";
         indice=1;
