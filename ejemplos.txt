@@ -1,3 +1,5 @@
+
+//
 class frfd
 begin
 def A , B as integer ;
@@ -17,14 +19,54 @@ A = B ;
 endfor
 end
 
+////error entre tipos
+class frfd
+begin
+def A , B as integer ;
+def a , b as string ;
+for ( A = a : A < b )
+A = B + b ;
+endfor
+end
+
 class frfd
 begin
 def A , B as integer ;
 def s , d as string ;
 while A < B
 if A > B
-for ( A = 0 : A < 2 )
-A = B ;
+for ( A = A : A < B )
+A = B + s ;
+endfor
+endif
+endwhile
+end
+
+//error TIPOS
+class frfd
+begin
+def A , B as integer ;
+def s , d as string ;
+while A < B
+if A > B
+s = d ;
+for ( A = A : A < B )
+A = B + s ;
+endfor
+endif
+endwhile
+end
+
+//VARIABLE YA DEFINIDA 
+class frfd
+begin
+def A , B , A  as integer ;
+def s , d as string ;
+while A < B
+if A > B
+s = d ;
+for ( A = A : A < B )
+A = B + s ;
 endfor
 endif
 endwhile
