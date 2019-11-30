@@ -13,7 +13,8 @@ class frfd
 begin
 def A , B as integer ;
 for ( A = 0 : A < 2 )
-A = B ;
+write ( A ) ;
+write ( " Hola " ) ;
 endfor
 end
 
@@ -28,4 +29,17 @@ A = B ;
 endfor
 endif
 endwhile
+end
+
+class frfd
+begin
+def A , B as integer ;
+A = A + 1 ;
+end
+
+class frfd
+begin
+def A , B as integer ;
+write ( A ) ;
+A = A + 3 ;
 end
