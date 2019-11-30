@@ -40,6 +40,6 @@ end
 class frfd
 begin
 def A , B as integer ;
-write ( A ) ;
+write ( A )
 A = A + 3 ;
 end
