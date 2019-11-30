@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Stack;
 import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
@@ -18,6 +19,7 @@ import javax.xml.bind.DatatypeConverter;
  */
 public class Analizador extends javax.swing.JFrame {
 public ArrayList<Lista> cuadruplos=new ArrayList();
+Iterator<Lista> iter = cuadruplos.iterator();
 public Stack <Integer> pE=new Stack <Integer>();
 public Stack  poperadores =new Stack ();
 public Stack  poperandos =new Stack ();
@@ -32,7 +34,10 @@ int indice=1;
 Lista obj=new Lista();
 String [] variable;
 boolean plus=false,resta=false,multi=false,divi=false,igual=false,men=false,may=false,WHILE=false,
-        meni=false,mayi=false,difde=false,If=false,forr=false,whilee=false,elsee=false,endif=false,Endw=false,whil=false,com=false,cons=false;
+        meni=false,mayi=false,difde=false,If=false,forr=false,whilee=false,elsee=false,endif=false,
+        Endw=false,whil=false,com=false,cons=false, ig=false,opt=false;
+  int resu;
+  String re="";
                                 //OP1 OP2 +-*  /  d.m rec and nor or
 static int [][] matrizDeTipos  ={{138,138,138,139,138,142,544},
                                  {138,139,139,139,544,142,544},
@@ -579,13 +584,20 @@ void asignatipos(String a,String b, String o)
             imprimepilaoperadores();
             comparatipos(compartip, compartip1, oper);
             imprimepilaoperadores();
-             model.addRow(new Object[]{num,oper,op1,op2,res});
+           if(("1".equals(op1) || "2".equals(op1) || "3".equals(op1) || "4".equals(op1) || "5".equals(op1)) && ("1".equals(op2) ||
+           "2".equals(op2) || "3".equals(op2) || "4".equals(op2) || "5".equals(op2)) )
+           {
+               optimiza(num,oper,op1,op2,res);
+           }
+           else
+           {
+              model.addRow(new Object[]{num,oper,op1,op2,res});
+           }
             obj.n=Integer.toString(num);
             obj.oper=oper;
             obj.op1=op1;
             obj.op2=op2;
             obj.res=res;
-           //optimiza(num, oper, op1, op2, res);
             cuadruplos.add(obj);
             poperandos.push(res);
             tipos.push(resTipo);
@@ -604,20 +616,25 @@ void asignatipos(String a,String b, String o)
             imprimepilatipos();
             imprimepilaop2();
             op1=(String) poperandos.pop();
-            
             tipos.pop();
             imprimepilatipos();
             imprimepilaop2();
             oper=(String) poperadores.pop();
             imprimepilaoperadores();
-            model.addRow(new Object[]{num,oper,op1,op2,res});
+            if(opt==false){
+                model.addRow(new Object[]{num,oper,op1,op2,res});
+                
+            }
+            else{
+                optimiza(num,oper,op1,op2,res);
+            }
             obj.n=Integer.toString(num);
             obj.oper=oper;
             obj.op1=op1;
             obj.op2=op2;
             obj.res=res;
             cuadruplos.add(obj);
-           // optimiza(num, oper, op1, op2, res);
+            
             imprimepilatipos();
            
             num++;
@@ -739,21 +756,61 @@ void asignatipos(String a,String b, String o)
                 
        }    
     }
- void optimiza(int n,String oper,String op1,String op2,String Res)
+ void optimiza(int num,String oper,String op1,String op2,String ress)
  {
-      int a=Integer.parseInt(op1);
-      int b=Integer.parseInt(op2);
-     if("+".equals(oper) || oper=="=" && (a>=0 && a<=10) && (b>=0 && b<=10))
-     {
-         
-         int ress=a+b;
-         String operr="=";
-         op2="";
-        if(oper=="=")
-        {
-           model.addRow(new Object[]{num,operr,op1,op2,ress});
-        }
-     }
+   
+if("+".equals(oper) && ("1".equals(op1) || "2".equals(op1) || "3".equals(op1) || "4".equals(op1) || "5".equals(op1)) && ("1".equals(op2) ||
+           "2".equals(op2) || "3".equals(op2) || "4".equals(op2) || "5".equals(op2)) )
+{
+    
+    int a=Integer.parseInt(op1);
+    int b=Integer.parseInt(op2);
+    resu = a+b;
+    re=Integer.toString(resu);
+    System.out.println(""+re);
+    opt=true;
+}
+if("-".equals(oper) && ("1".equals(op1) || "2".equals(op1) || "3".equals(op1) || "4".equals(op1) || "5".equals(op1)) && ("1".equals(op2) ||
+           "2".equals(op2) || "3".equals(op2) || "4".equals(op2) || "5".equals(op2)) )
+{
+    
+    int a=Integer.parseInt(op1);
+    int b=Integer.parseInt(op2);
+    resu = a-b;
+    re=Integer.toString(resu);
+    System.out.println(""+re);
+    opt=true;
+}
+if("*".equals(oper) && ("1".equals(op1) || "2".equals(op1) || "3".equals(op1) || "4".equals(op1) || "5".equals(op1)) && ("1".equals(op2) ||
+           "2".equals(op2) || "3".equals(op2) || "4".equals(op2) || "5".equals(op2)) )
+{
+    
+    int a=Integer.parseInt(op1);
+    int b=Integer.parseInt(op2);
+    resu = a*b;
+    re=Integer.toString(resu);
+    System.out.println(""+re);
+    opt=true;
+}
+if("/".equals(oper) && ("1".equals(op1) || "2".equals(op1) || "3".equals(op1) || "4".equals(op1) || "5".equals(op1)) && ("1".equals(op2) ||
+           "2".equals(op2) || "3".equals(op2) || "4".equals(op2) || "5".equals(op2)) )
+{
+    
+    int a=Integer.parseInt(op1);
+    int b=Integer.parseInt(op2);
+    resu = (a/b);
+    re=Integer.toString(resu);
+    System.out.println(""+re);
+    opt=true;
+}
+
+if("=".equals(oper))
+{
+    
+    model.addRow(new Object[]{num-1,oper,op1,"",re});
+    opt=false;
+}
+
  }      
 void analiza()
 {
@@ -951,16 +1008,20 @@ while(st.hasMoreElements())
         
         if(reser==0 || reser==43)//si es identificador
         {
-            
+            if (reser==43)
+            {
+                
+            }
                 while(!poperandoscompara.empty())
                 {
                     String a=(String)poperandoscompara.pop();//INVERTIR PILA
                     poperanco2.push(a);
                 }
                 int busquea = poperanco2.search(token);//
-                
+                System.out.println(""+ token);
                 if(busquea>=0){// se busva en la pilas de comparacion para determinar
                                              //el tipo para el semantico
+                    System.out.println("j"+busquea);
                 tipo=(String) tiposcompara.elementAt(busquea-1);//-1 ya que la funcion search empieza desde 1 y no 0
                 tipos.push(tipo);
                 imprimepilatipos();
@@ -972,7 +1033,7 @@ while(st.hasMoreElements())
                   if(whil==true)
                     {
                         
-                            System.out.println("whil whil");
+                        System.out.println("whil whil");
                         cuadruplos(9);
                         whil=false;
                         
@@ -1003,6 +1064,14 @@ while(st.hasMoreElements())
                         forr=false;
                         
                     }
+                    if(whil==true)
+                    {
+                        
+                        System.out.println("whil whil");
+                        cuadruplos(9);
+                        whil=false;
+                        
+                    }
                    
                    
                 }
@@ -1011,9 +1080,10 @@ while(st.hasMoreElements())
                 }
                 else
                 {
-                    
+                    if(cons==false)
                     err+= "Varible "+token+ " no definida \n";
-                    
+                    else
+                    cons=false;    
                     
                     tipos.push("integer");
                     
@@ -1051,6 +1121,14 @@ while(st.hasMoreElements())
                     {
                         cuadruplos(3);
                         If=false;
+                    }
+                    if(whil==true)
+                    {
+                        
+                        System.out.println("whil whil");
+                        cuadruplos(9);
+                        whil=false;
+                        
                     }
                     
                     
@@ -1226,7 +1304,8 @@ void imprimepilaop3()
         tipos.clear();
         psaltos.clear();
         analiza();
-        txterr.setText(err);// TODO add your handling code here:
+        txterr.setText(err);
+ 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
