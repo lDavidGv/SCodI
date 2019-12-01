@@ -2,6 +2,20 @@ class frfd
 begin
 def A , B as integer ;
 def s , d as string ;
+A = 4 ;
+B = 2 ;
+while A < B
+if A > B
+A = B + 7 ;
+write ( A )
+endif
+endwhile
+end
+
+class frfd
+begin
+def A , B as integer ;
+def s , d as string ;
 while A < B
 if A > B
 A = B ;
@@ -22,6 +36,8 @@ class frfd
 begin
 def A , B as integer ;
 def s , d as string ;
+A=1;
+B=6;
 while A < B
 if A > B
 for ( A = 0 : A < 2 )
@@ -40,6 +56,6 @@ end
 class frfd
 begin
 def A , B as integer ;
-write ( A )
+write ( A ) ;
 A = A + 3 ;
 end

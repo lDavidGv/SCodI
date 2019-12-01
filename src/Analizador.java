@@ -1,6 +1,8 @@
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Stack;
 import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
@@ -38,6 +40,8 @@ boolean plus=false,resta=false,multi=false,divi=false,igual=false,men=false,may=
         Endw=false,whil=false,com=false,cons=false, ig=false,opt=false;
   int resu;
   String re="";
+  Map<String, String> map = new HashMap<String, String>();
+
                                 //OP1 OP2 +-*  /  d.m rec and nor or
 static int [][] matrizDeTipos  ={{138,138,138,139,138,142,544},
                                  {138,139,139,139,544,142,544},
@@ -584,6 +588,53 @@ void asignatipos(String a,String b, String o)
             imprimepilaoperadores();
             comparatipos(compartip, compartip1, oper);
             imprimepilaoperadores();
+            if("<".equals(oper) || ">".equals(oper))
+            {
+                if((!"1".equals(op1) || !"2".equals(op1) || !"3".equals(op1) || !"4".equals(op1) || !"5".equals(op1)) && (!"1".equals(op2) ||
+           !"2".equals(op2) || !"3".equals(op2) || !"4".equals(op2) || !"5".equals(op2)) ){
+                
+                int p = Integer.parseInt(map.get(op1));
+                int q=Integer.parseInt(map.get(op2));
+                if ("<".equals(oper))
+                {
+                    if(p<q)
+                    res="TRUE";
+                    else
+                    res="False";
+                }
+                if (">".equals(oper))
+                {
+                    if(p>q)
+                    res="True";
+                    else
+                    res="False";
+                }
+                
+            }
+            }
+            if("+".equals(oper) || "-".equals(oper))
+            {
+                
+                System.out.println(op1+" "+op2);
+                
+                if( ("1".equals(op1) || "2".equals(op1) || "3".equals(op1) || "4".equals(op1) || "5".equals(op1) || "6".equals(op1))&&
+                        (("1".equals(op2) || "2".equals(op2) || "3".equals(op2) || "4".equals(op2) || "5".equals(op2) || "6".equals(op2))))
+                {
+                    cons=true;
+                }
+                if(cons==false){
+                System.out.println(""+cons);
+                int p = Integer.parseInt(map.get(op1));
+                int q=Integer.parseInt(map.get(op2));
+                if ("+".equals(oper))
+                {
+                  res=String.valueOf(p+q);  
+                }
+                else if("-".equals(oper)){
+                res=String.valueOf(p-q);
+                }
+                }
+            }
            if(("1".equals(op1) || "2".equals(op1) || "3".equals(op1) || "4".equals(op1) || "5".equals(op1)) && ("1".equals(op2) ||
            "2".equals(op2) || "3".equals(op2) || "4".equals(op2) || "5".equals(op2)) )
            {
@@ -591,8 +642,10 @@ void asignatipos(String a,String b, String o)
            }
            else
            {
+          
               model.addRow(new Object[]{num,oper,op1,op2,res});
            }
+           
             obj.n=Integer.toString(num);
             obj.oper=oper;
             obj.op1=op1;
@@ -622,8 +675,9 @@ void asignatipos(String a,String b, String o)
             oper=(String) poperadores.pop();
             imprimepilaoperadores();
             if(opt==false){
-                model.addRow(new Object[]{num,oper,op1,op2,res});
                 
+                model.addRow(new Object[]{num,oper,op1,op2,res});
+                map.put(op1, res);
             }
             else{
                 optimiza(num,oper,op1,op2,res);
@@ -750,6 +804,7 @@ void asignatipos(String a,String b, String o)
             oper="write";
             res=(String) poperandos.pop();
             model.addRow(new Object[]{num,oper,op1,op2,res});
+            txta1.setText(" -> : " + map.get(res));
             num++;
             break;    
                 
@@ -808,6 +863,7 @@ if("=".equals(oper))
 {
     
     model.addRow(new Object[]{num-1,oper,op1,"",re});
+    map.put(op1, re);
     opt=false;
 }
 
@@ -1064,14 +1120,7 @@ while(st.hasMoreElements())
                         forr=false;
                         
                     }
-                    if(whil==true)
-                    {
-                        
-                        System.out.println("whil whil");
-                        cuadruplos(9);
-                        whil=false;
-                        
-                    }
+                   
                    
                    
                 }
@@ -1122,14 +1171,7 @@ while(st.hasMoreElements())
                         cuadruplos(3);
                         If=false;
                     }
-                    if(whil==true)
-                    {
-                        
-                        System.out.println("whil whil");
-                        cuadruplos(9);
-                        whil=false;
-                        
-                    }
+                    
                     
                     
                 }
@@ -1305,7 +1347,12 @@ void imprimepilaop3()
         psaltos.clear();
         analiza();
         txterr.setText(err);
- 
+  Iterator it = map.keySet().iterator();
+  while(it.hasNext()){
+  String key = (String) it.next();
+  System.out.println("Clave: " + key + " -> Valor: " + map.get(key));
+
+}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
