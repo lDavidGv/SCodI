@@ -6,7 +6,7 @@ A = 4 ;
 B = 2 ;
 while A < B
 if A > B
-A = B + 7 ;
+A = 4 + 2 ;
 write ( A )
 endif
 endwhile

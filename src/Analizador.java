@@ -37,9 +37,9 @@ Lista obj=new Lista();
 String [] variable;
 boolean plus=false,resta=false,multi=false,divi=false,igual=false,men=false,may=false,WHILE=false,
         meni=false,mayi=false,difde=false,If=false,forr=false,whilee=false,elsee=false,endif=false,
-        Endw=false,whil=false,com=false,cons=false, ig=false,opt=false;
+        Endw=false,whil=false,com=false,cons=false, ig=false,opt=false,cons1=false;
   int resu;
-  String re="";
+  String re="",sal="";
   Map<String, String> map = new HashMap<String, String>();
 
                                 //OP1 OP2 +-*  /  d.m rec and nor or
@@ -592,7 +592,7 @@ void asignatipos(String a,String b, String o)
             {
                 if((!"1".equals(op1) || !"2".equals(op1) || !"3".equals(op1) || !"4".equals(op1) || !"5".equals(op1)) && (!"1".equals(op2) ||
            !"2".equals(op2) || !"3".equals(op2) || !"4".equals(op2) || !"5".equals(op2)) ){
-                
+                try{
                 int p = Integer.parseInt(map.get(op1));
                 int q=Integer.parseInt(map.get(op2));
                 if ("<".equals(oper))
@@ -609,7 +609,11 @@ void asignatipos(String a,String b, String o)
                     else
                     res="False";
                 }
-                
+                }
+                catch(Exception e)
+                {
+                    
+                }
             }
             }
             if("+".equals(oper) || "-".equals(oper))
@@ -623,8 +627,9 @@ void asignatipos(String a,String b, String o)
                     cons=true;
                 }
                 if(cons==false){
-                System.out.println(""+cons);
-                int p = Integer.parseInt(map.get(op1));
+                try{
+                System.out.println("JJ"+cons);
+                int p =Integer.parseInt(map.get(op1));
                 int q=Integer.parseInt(map.get(op2));
                 if ("+".equals(oper))
                 {
@@ -634,7 +639,20 @@ void asignatipos(String a,String b, String o)
                 res=String.valueOf(p-q);
                 }
                 }
-            }
+                catch(Exception e)
+                {
+                    System.out.println("cart");
+                    int p =Integer.parseInt(map.get(op1));
+                    int q=Integer.parseInt(op2);
+                    if ("+".equals(oper))
+                {
+                  res=String.valueOf(p+q);  
+                }
+                else if("-".equals(oper)){
+                res=String.valueOf(p-q);
+                }
+                }}
+                }
            if(("1".equals(op1) || "2".equals(op1) || "3".equals(op1) || "4".equals(op1) || "5".equals(op1)) && ("1".equals(op2) ||
            "2".equals(op2) || "3".equals(op2) || "4".equals(op2) || "5".equals(op2)) )
            {
@@ -804,8 +822,19 @@ void asignatipos(String a,String b, String o)
             oper="write";
             res=(String) poperandos.pop();
             model.addRow(new Object[]{num,oper,op1,op2,res});
-            txta1.setText(" -> : " + map.get(res));
+            if(map.get(res)==null)
+            {
+                sal+= " -> : " +  res+ "\n";
+            txta1.setText(sal);
             num++;
+            
+            }
+            else{
+            sal+= " -> : " +  map.get(res)+ "\n";
+            txta1.setText(sal);
+            num++;
+            }
+            
             break;    
                 
                 
@@ -979,7 +1008,7 @@ while(st.hasMoreElements())
     
     if (reser==43)
         {
-            cons=true;
+            cons1=true;
         }
     if(reser==34 || pcom==true)
     {
@@ -1064,9 +1093,10 @@ while(st.hasMoreElements())
         
         if(reser==0 || reser==43)//si es identificador
         {
+            
             if (reser==43)
             {
-                
+                cons1=true;
             }
                 while(!poperandoscompara.empty())
                 {
@@ -1075,6 +1105,9 @@ while(st.hasMoreElements())
                 }
                 int busquea = poperanco2.search(token);//
                 System.out.println(""+ token);
+                try{
+                    
+                
                 if(busquea>=0){// se busva en la pilas de comparacion para determinar
                                              //el tipo para el semantico
                     System.out.println("j"+busquea);
@@ -1123,13 +1156,16 @@ while(st.hasMoreElements())
                    
                    
                    
+                
                 }
                 
+                
 
+                
                 }
                 else
                 {
-                    if(cons==false)
+                    if(cons1==false)
                     err+= "Varible "+token+ " no definida \n";
                     else
                     cons=false;    
@@ -1179,6 +1215,55 @@ while(st.hasMoreElements())
 
                 
                 }
+                }catch(Exception e)
+                        {
+                        if(cons1==false)
+                    err+= "Varible "+token+ " no definida \n";
+                    else
+                    cons=false;    
+                    
+                    tipos.push("integer");
+                    
+                    poperandos.push(token);
+                    poperanco2.push(token);
+                    poperandoscompara.push(token);
+                    tiposcompara.push("integer");
+                    imprimepilaop2();
+                    imprimepilatipos();
+                    if(plus==true || resta==true || multi == true || men==true || may==true || meni==true || mayi==true || difde==true || whil==true)
+                {
+                    
+                     if(whil==true)
+                    {
+                        System.out.println("whil");
+                        cuadruplos(9);
+                        whil=false;
+                    }
+                     else
+                     {
+                    cuadruplos(1);
+                    plus=false;
+                    multi=false;
+                    resta=false;
+                    men=false;
+                    may=false;
+                    mayi=false;meni=false;difde=false;
+                     }
+                    if(If==true)
+                    {
+                        cuadruplos(3);
+                        If=false;
+                    }
+                    if(If==true)
+                    {
+                        cuadruplos(3);
+                        If=false;
+                    }
+                    
+                    
+                    
+                }
+                        }
                 
             
                 
@@ -1324,6 +1409,7 @@ void imprimepilaop3()
    
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        sal="";
         poperanco2.clear();
         saltos="";
         err="";
