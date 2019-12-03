@@ -1,14 +1,24 @@
-class frfd
+def A , B as integer ;
+A = 1 ;
+B = 6 ;
+while A < B
+if A < B
+write ( A )
+A = A + 1 ;
+endif
+B = 5 * 3 ;
+endwhile
+end
+
+class frfd                                           
 begin
 def A , B as integer ;
-def s , d as string ;
-A = 4 ;
-B = 2 ;
+A = 1 ;
+B = 6 ;
 while A < B
-if A > B
-A = 4 + 2 ;
+A = A + 1 ;
 write ( A )
-endif
+A = A + 1 ;
 endwhile
 end
 

@@ -5,9 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Stack;
 import java.util.StringTokenizer;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.xml.bind.DatatypeConverter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -22,8 +20,9 @@ import javax.xml.bind.DatatypeConverter;
 public class Analizador extends javax.swing.JFrame {
 public ArrayList<Lista> cuadruplos=new ArrayList();
 Iterator<Lista> iter = cuadruplos.iterator();
-public Stack <Integer> pE=new Stack <Integer>();
+public Stack <Integer> pE=new Stack <>();
 public Stack  poperadores =new Stack ();
+public Stack  numeros =new Stack ();
 public Stack  poperandos =new Stack ();
 public Stack  poperandoscompara =new Stack (),poperanco2 = new Stack();
 public Stack  tiposcompara =new Stack ();
@@ -31,16 +30,17 @@ public Stack  psaltos =new Stack ();
 public Stack  tipos =new Stack ();
 String tip="",operando="",operadores="",tipo="",op1="",op2="",oper="",res="",tipoq="",operando1="",saltos="",resTipo="";
 String err="",peek="";
-int num=1,tipo1=0;
+int num=1,tipo1=0,sd=0;
 int indice=1; 
+int salto;
 Lista obj=new Lista();
 String [] variable;
-boolean plus=false,resta=false,multi=false,divi=false,igual=false,men=false,may=false,WHILE=false,
+boolean plus=false,resta=false,multi=false,divi=false,igual=false,men=false,may=false,WHILE=false,wh=false,
         meni=false,mayi=false,difde=false,If=false,forr=false,whilee=false,elsee=false,endif=false,
-        Endw=false,whil=false,com=false,cons=false, ig=false,opt=false,cons1=false;
-  int resu;
-  String re="",sal="";
-  Map<String, String> map = new HashMap<String, String>();
+        Endw=false,whil=false,com=false,cons=false, ig=false,opt=false,cons1=false,endw=false,enf=false;
+  int resu,nubo,nobo1;
+  String re="",sal="",oper1,oper2,oper3,oper4;
+  Map<String, String> map = new HashMap<>();
 
                                 //OP1 OP2 +-*  /  d.m rec and nor or
 static int [][] matrizDeTipos  ={{138,138,138,139,138,142,544},
@@ -76,6 +76,7 @@ String[] columnNames = {"#", "OPER", "OP1", "OP2", "RES"};
     public Analizador() {
         initComponents();
         tabla.setModel(model);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -349,6 +350,7 @@ String[] columnNames = {"#", "OPER", "OP1", "OP2", "RES"};
                 case "10":return 43;case "9":return 43;case "8":return 43;case "7":return 43;case "6":return 43;case "0":return 43;
                 
                 
+                
             }
         return 0;
 }
@@ -560,6 +562,7 @@ void asignatipos(String a,String b, String o)
        switch(a)
        {
            case 1:
+            if(endw==false){
             op2=(String) poperandos.pop();
             int tipo1=poperanco2.search(op2);
             if(tipo1==-1)
@@ -595,19 +598,40 @@ void asignatipos(String a,String b, String o)
                 try{
                 int p = Integer.parseInt(map.get(op1));
                 int q=Integer.parseInt(map.get(op2));
+                
                 if ("<".equals(oper))
                 {
-                    if(p<q)
+                    oper1=op1;
+                    oper2=op2;
+                    if(p<q){
                     res="TRUE";
+                    endw=false;
+                    enf=true;
+                    }
                     else
+                    {
                     res="False";
+                    endw=true;
+                    enf=false;
+                    
+                    
+                    
+                   
+                    
+                    }
                 }
                 if (">".equals(oper))
                 {
-                    if(p>q)
+                    oper1=op1;
+                    oper2=op2;
+                    if(p>q){
                     res="True";
-                    else
+                    endw=false;
+                    enf=true;}
+                    else{
                     res="False";
+                    endw=true;
+                    enf=false;}
                 }
                 }
                 catch(Exception e)
@@ -633,7 +657,9 @@ void asignatipos(String a,String b, String o)
                 int q=Integer.parseInt(map.get(op2));
                 if ("+".equals(oper))
                 {
-                  res=String.valueOf(p+q);  
+                  res=String.valueOf(p+q);
+                  map.put("op1", ""+p);
+                  map.put("op2", ""+q);
                 }
                 else if("-".equals(oper)){
                 res=String.valueOf(p-q);
@@ -644,9 +670,14 @@ void asignatipos(String a,String b, String o)
                     System.out.println("cart");
                     int p =Integer.parseInt(map.get(op1));
                     int q=Integer.parseInt(op2);
+                    
                     if ("+".equals(oper))
                 {
-                  res=String.valueOf(p+q);  
+                    oper3=map.get(op1);
+                    oper4=op2;
+                  res=String.valueOf(p+q);
+                  map.put("op1", ""+p);
+                  map.put("op2", ""+q);
                 }
                 else if("-".equals(oper)){
                 res=String.valueOf(p-q);
@@ -657,6 +688,7 @@ void asignatipos(String a,String b, String o)
            "2".equals(op2) || "3".equals(op2) || "4".equals(op2) || "5".equals(op2)) )
            {
                optimiza(num,oper,op1,op2,res);
+               //num--;
            }
            else
            {
@@ -676,11 +708,11 @@ void asignatipos(String a,String b, String o)
             imprimepilaop2();
             indice++;
             num++;
-            
+            }
             break;
             
             case 2://ASIGNA
-            
+            if(endw==false){
             op2=null;
             res=(String) poperandos.pop();
             tipos.pop();
@@ -696,9 +728,12 @@ void asignatipos(String a,String b, String o)
                 
                 model.addRow(new Object[]{num,oper,op1,op2,res});
                 map.put(op1, res);
+                map.put(op1+"1", res);
+                
             }
             else{
-                optimiza(num,oper,op1,op2,res);
+                optimiza(num,oper,op1,op2,res); // manda para poder asignar constantes a variables
+                num--;
             }
             obj.n=Integer.toString(num);
             obj.oper=oper;
@@ -709,10 +744,11 @@ void asignatipos(String a,String b, String o)
             
             imprimepilatipos();
            
-            num++;
+            num++;}
             break;
             //Acciones IF
             case 3:
+                if(endw==false){
                 op2=null;
                 op1=(String) poperandos.pop();
                 tipos.pop();
@@ -728,14 +764,15 @@ void asignatipos(String a,String b, String o)
                 cuadruplos.add(obj);
                 psaltos.push(num);
                 imprimepilasaltos();
-                num++;
+                num++;}
             break;
             case 4:
+                if(endw==false){
                 op2=null;
                 op1=null;
                 res=null;
                 oper="SI";
-                int salto=(int) psaltos.pop();
+                salto=(int) psaltos.pop();
                 imprimepilasaltos();
                 model.setValueAt(num+1, salto-1, 4);
                 model.addRow(new Object[]{num,oper,op1,op2,res});
@@ -747,17 +784,19 @@ void asignatipos(String a,String b, String o)
                 cuadruplos.add(obj);
                 psaltos.push(num);
                 imprimepilasaltos();
-                num++;
+                num++;}
                 break;
             case 5:
+                if(endw==false){
                 poperadores.pop();
                 imprimepilaoperadores();
                 salto=(int) psaltos.pop();
                 imprimepilasaltos();
-                model.setValueAt(num, salto-1, 4);
+                model.setValueAt(num, salto-1, 4);}
                 break;
                 //Acciones While
             case 6:
+                if(endw==false){
                 op2=null;
                 op1=null;
                 oper="SI";
@@ -771,9 +810,11 @@ void asignatipos(String a,String b, String o)
                 obj.op2=op2;
                 obj.res=res;
                 cuadruplos.add(obj);
+                nobo1=num-1;}
                 num++;
                 break;
             case 7:
+                if(endw==false){
                 op2=null;
                 op1=(String) poperandos.pop();
                 tipos.pop();
@@ -790,9 +831,10 @@ void asignatipos(String a,String b, String o)
                 cuadruplos.add(obj);
                 psaltos.push(num);
                 imprimepilasaltos();
-                num++;
+                num++;}
             break;
             case 8:
+                if(endw==false){
             op2=null;
             res=(String) poperandos.pop();
             tipos.pop();
@@ -813,28 +855,44 @@ void asignatipos(String a,String b, String o)
                 cuadruplos.add(obj);
                 imprimepilatipos();
             
-            num++;
+            num++;}
             break;
             
             case 9:
+                if(endw==false){
             op1="";
             op2="";
             oper="write";
             res=(String) poperandos.pop();
             model.addRow(new Object[]{num,oper,op1,op2,res});
+            
+            int q=Integer.parseInt(map.get("B1")),p=Integer.parseInt(map.get("A1"));
+            
+            
+                
             if(map.get(res)==null)
             {
                 sal+= " -> : " +  res+ "\n";
-            txta1.setText(sal);
-            num++;
+                map.put(""+sd++, res);
+                numeros.push(sd);
+                txta1.setText(sal);
+            
+            
             
             }
             else{
+            
             sal+= " -> : " +  map.get(res)+ "\n";
+            map.put(""+sd++, map.get(res).toString());
+            numeros.push(sd);
             txta1.setText(sal);
-            num++;
+            
             }
             
+            
+            num++;
+                }
+                
             break;    
                 
                 
@@ -849,6 +907,8 @@ if("+".equals(oper) && ("1".equals(op1) || "2".equals(op1) || "3".equals(op1) ||
     
     int a=Integer.parseInt(op1);
     int b=Integer.parseInt(op2);
+    map.put("op1", ""+a);
+    map.put("op2", ""+b);
     resu = a+b;
     re=Integer.toString(resu);
     System.out.println(""+re);
@@ -1056,18 +1116,53 @@ while(st.hasMoreElements())
             }
         if(reser==13)//endif
             {
+            endw=false;
                 endif=true;
                 cuadruplos(5);
             }
         if(reser==16)//while
             {
+                wh=true;
                 WHILE=true;
                 psaltos.push(num);
                 
             }
         if(reser==15)//ENDwhile
             {
-                cuadruplos(6);
+            for(int i=0;i<numeros.size();i++)
+            {
+                int s=  (int) numeros.elementAt(i);
+                System.out.println("s"+s);
+                int q=Integer.parseInt(map.get(oper2)),p=Integer.parseInt(map.get(oper1));
+           int a=Integer.parseInt(map.get(""+(s-1)));
+            map.put(""+(s-1), ""+(a+1));
+                while(p<q)
+                {
+            if(map.get(""+(s-1))==null)
+            {
+                sal+= " -> : " +  res+ "\n";
+                txta1.setText(sal);
+                System.out.println("nullll");
+            
+            
+            }
+            else{
+            
+            sal+= " -> : " +  map.get(""+(s-1))+ "\n";
+            txta1.setText(sal);
+            a=Integer.parseInt(map.get(""+(s-1)));
+            map.put(""+(s-1), ""+(a+1));
+            
+            } 
+            
+                   int pa = Integer.parseInt(oper4);
+            p=p+pa;
+                }
+            }    
+            cuadruplos(6);
+            endw=false; 
+            
+            
 
             }
         if(reser==18)//For
@@ -1409,6 +1504,8 @@ void imprimepilaop3()
    
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        map.clear();
+        txta1.setText("");
         sal="";
         poperanco2.clear();
         saltos="";
@@ -1437,8 +1534,19 @@ void imprimepilaop3()
   while(it.hasNext()){
   String key = (String) it.next();
   System.out.println("Clave: " + key + " -> Valor: " + map.get(key));
+ 
 
 }
+      /*  System.out.println(""+ nubo+ " "+ nobo1);
+        for(nubo=nubo+2;nubo<nobo1-2;nubo++)
+        {
+            System.out.println(""+ nubo+ " "+ nobo1);
+            model.removeRow(nubo);
+        }
+                    //model.removeRow(nubo+1);
+                    //model.removeRow(nobo1-3);
+        */            
+          
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
