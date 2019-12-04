@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Stack;
 import java.util.StringTokenizer;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -37,7 +38,7 @@ Lista obj=new Lista();
 String [] variable;
 boolean plus=false,resta=false,multi=false,divi=false,igual=false,men=false,may=false,WHILE=false,wh=false,
         meni=false,mayi=false,difde=false,If=false,forr=false,whilee=false,elsee=false,endif=false,
-        Endw=false,whil=false,com=false,cons=false, ig=false,opt=false,cons1=false,endw=false,enf=false;
+        Endw=false,whil=false,com=false,cons=false, ig=false,opt=false,cons1=false,endw=false,enf=false,elseie=false,whi=false,io=false;
   int resu,nubo,nobo1;
   String re="",sal="",oper1,oper2,oper3,oper4;
   Map<String, String> map = new HashMap<>();
@@ -102,7 +103,6 @@ String[] columnNames = {"#", "OPER", "OP1", "OP2", "RES"};
         jScrollPane11 = new javax.swing.JScrollPane();
         txtoperandos = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -113,6 +113,7 @@ String[] columnNames = {"#", "OPER", "OP1", "OP2", "RES"};
         jScrollPane3 = new javax.swing.JScrollPane();
         txta1 = new javax.swing.JTextPane();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -143,8 +144,6 @@ String[] columnNames = {"#", "OPER", "OP1", "OP2", "RES"};
 
         jLabel1.setText("Entrada");
 
-        jLabel2.setText("Cuadruplos");
-
         jLabel3.setText("Errores");
 
         jLabel4.setText("Tipos");
@@ -161,6 +160,8 @@ String[] columnNames = {"#", "OPER", "OP1", "OP2", "RES"};
 
         jLabel8.setText("Salida");
 
+        jLabel9.setText("optimizacion");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -169,46 +170,52 @@ String[] columnNames = {"#", "OPER", "OP1", "OP2", "RES"};
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(168, 168, 168))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(38, 38, 38)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(145, 145, 145))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane7))
+                                .addGap(25, 25, 25)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(174, 174, 174)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(42, 42, 42)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(18, 18, 18)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -216,38 +223,45 @@ String[] columnNames = {"#", "OPER", "OP1", "OP2", "RES"};
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jButton1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(10, 10, 10)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         pack();
@@ -562,7 +576,7 @@ void asignatipos(String a,String b, String o)
        switch(a)
        {
            case 1:
-            if(endw==false){
+            if(endw==false && elseie==false){ // condicoin para respetar la ejecucion logica
             op2=(String) poperandos.pop();
             int tipo1=poperanco2.search(op2);
             if(tipo1==-1)
@@ -591,12 +605,12 @@ void asignatipos(String a,String b, String o)
             imprimepilaoperadores();
             comparatipos(compartip, compartip1, oper);
             imprimepilaoperadores();
-            if("<".equals(oper) || ">".equals(oper))
+            if("<".equals(oper) || ">".equals(oper)) // detectar las comparaciones para determinar si es una condicoin
             {
                 if((!"1".equals(op1) || !"2".equals(op1) || !"3".equals(op1) || !"4".equals(op1) || !"5".equals(op1)) && (!"1".equals(op2) ||
            !"2".equals(op2) || !"3".equals(op2) || !"4".equals(op2) || !"5".equals(op2)) ){
                 try{
-                int p = Integer.parseInt(map.get(op1));
+                int p = Integer.parseInt(map.get(op1)); // se obitiene el valor de las variables para determinar v o f
                 int q=Integer.parseInt(map.get(op2));
                 
                 if ("<".equals(oper))
@@ -604,7 +618,7 @@ void asignatipos(String a,String b, String o)
                     oper1=op1;
                     oper2=op2;
                     if(p<q){
-                    res="TRUE";
+                    res="True";
                     endw=false;
                     enf=true;
                     }
@@ -613,11 +627,7 @@ void asignatipos(String a,String b, String o)
                     res="False";
                     endw=true;
                     enf=false;
-                    
-                    
-                    
-                   
-                    
+                 
                     }
                 }
                 if (">".equals(oper))
@@ -629,9 +639,14 @@ void asignatipos(String a,String b, String o)
                     endw=false;
                     enf=true;}
                     else{
+                    if(whi==true)
+                    {
+                    }
+                    else{
                     res="False";
                     endw=true;
-                    enf=false;}
+                    enf=false;
+                    }}
                 }
                 }
                 catch(Exception e)
@@ -642,7 +657,7 @@ void asignatipos(String a,String b, String o)
             }
             if("+".equals(oper) || "-".equals(oper))
             {
-                
+                // identificar suma o resta para aplicarla directo a los cuadruplos
                 System.out.println(op1+" "+op2);
                 
                 if( ("1".equals(op1) || "2".equals(op1) || "3".equals(op1) || "4".equals(op1) || "5".equals(op1) || "6".equals(op1))&&
@@ -687,8 +702,15 @@ void asignatipos(String a,String b, String o)
            if(("1".equals(op1) || "2".equals(op1) || "3".equals(op1) || "4".equals(op1) || "5".equals(op1)) && ("1".equals(op2) ||
            "2".equals(op2) || "3".equals(op2) || "4".equals(op2) || "5".equals(op2)) )
            {
+               // si es una suma de constantes se hace la optimizacion de cuadruplos para que se asigne directamnete
                optimiza(num,oper,op1,op2,res);
                //num--;
+           }
+           else if(cons==false && (res!="True" && res!="False"))
+           {
+               JOptionPane.showMessageDialog(null, "cont ggg");
+               JOptionPane.showMessageDialog(null, op1+op2);
+               optimiza(num,oper,map.get(op1),map.get(op2),res);
            }
            else
            {
@@ -732,6 +754,7 @@ void asignatipos(String a,String b, String o)
                 
             }
             else{
+                
                 optimiza(num,oper,op1,op2,res); // manda para poder asignar constantes a variables
                 num--;
             }
@@ -748,7 +771,7 @@ void asignatipos(String a,String b, String o)
             break;
             //Acciones IF
             case 3:
-                if(endw==false){
+                if(endw==false || ig== true){
                 op2=null;
                 op1=(String) poperandos.pop();
                 tipos.pop();
@@ -767,7 +790,7 @@ void asignatipos(String a,String b, String o)
                 num++;}
             break;
             case 4:
-                if(endw==false){
+                if(endw==false || ig==true){
                 op2=null;
                 op1=null;
                 res=null;
@@ -787,7 +810,7 @@ void asignatipos(String a,String b, String o)
                 num++;}
                 break;
             case 5:
-                if(endw==false){
+                if(endw==false ){
                 poperadores.pop();
                 imprimepilaoperadores();
                 salto=(int) psaltos.pop();
@@ -796,7 +819,7 @@ void asignatipos(String a,String b, String o)
                 break;
                 //Acciones While
             case 6:
-                if(endw==false){
+                if(endw==false || ig==true ){
                 op2=null;
                 op1=null;
                 oper="SI";
@@ -858,7 +881,7 @@ void asignatipos(String a,String b, String o)
             num++;}
             break;
             
-            case 9:
+            case 9: // para imprimir los write
                 if(endw==false){
             op1="";
             op2="";
@@ -898,7 +921,7 @@ void asignatipos(String a,String b, String o)
                 
        }    
     }
- void optimiza(int num,String oper,String op1,String op2,String ress)
+ void optimiza(int num,String oper,String op1,String op2,String ress) // resive todos los argumentos de los cuadruplos para optimizar operaciones
  {
    
 if("+".equals(oper) && ("1".equals(op1) || "2".equals(op1) || "3".equals(op1) || "4".equals(op1) || "5".equals(op1)) && ("1".equals(op2) ||
@@ -907,7 +930,7 @@ if("+".equals(oper) && ("1".equals(op1) || "2".equals(op1) || "3".equals(op1) ||
     
     int a=Integer.parseInt(op1);
     int b=Integer.parseInt(op2);
-    map.put("op1", ""+a);
+    map.put("op1", ""+a); // se inserta en un hashmap el valor y la constante(clave-valor) para poder validar la ejecucion del while
     map.put("op2", ""+b);
     resu = a+b;
     re=Integer.toString(resu);
@@ -951,7 +974,7 @@ if("/".equals(oper) && ("1".equals(op1) || "2".equals(op1) || "3".equals(op1) ||
 if("=".equals(oper))
 {
     
-    model.addRow(new Object[]{num-1,oper,op1,"",re});
+    model.addRow(new Object[]{num-1,oper,op1,"",re}); // se hace la optimizacion de las asignaciones 
     map.put(op1, re);
     opt=false;
 }
@@ -1105,17 +1128,26 @@ while(st.hasMoreElements())
             }
         if(reser==12)//if
             {
+                ig=true;
                 If=true;
                 poperadores.push("$");
                 imprimepilaoperadores();//$ utilizado como fondo falso del if
             }
         if(reser==14)//else
             {
+            if(enf==true)
+            {elseie=true;}
+            else
+            {endw=false;
+                elseie=false;}
+                
                 elsee=true;
-                cuadruplos(4);
+                //cuadruplos(4);
             }
         if(reser==13)//endif
             {
+            elseie=false;
+            igual=false;
             endw=false;
                 endif=true;
                 cuadruplos(5);
@@ -1129,14 +1161,26 @@ while(st.hasMoreElements())
             }
         if(reser==15)//ENDwhile
             {
-            for(int i=0;i<numeros.size();i++)
+            int a = 0;
+            for(int i=0;i<numeros.size();i++)// se saca el numero de los cuadruplos desntro del while
             {
+                ///
+                String b="";
                 int s=  (int) numeros.elementAt(i);
                 System.out.println("s"+s);
                 int q=Integer.parseInt(map.get(oper2)),p=Integer.parseInt(map.get(oper1));
-           int a=Integer.parseInt(map.get(""+(s-1)));
-            map.put(""+(s-1), ""+(a+1));
-                while(p<q)
+           try
+           {
+                a=Integer.parseInt(map.get(""+(s-1)));
+                map.put(""+(s-1), ""+(a+1));
+           }
+           catch(Exception e)
+           {
+               b=map.get(""+(s-1));
+               map.put(""+(s-1), ""+(b));
+           }
+            
+                while(p<q) // para la salidas
                 {
             if(map.get(""+(s-1))==null)
             {
@@ -1150,13 +1194,23 @@ while(st.hasMoreElements())
             
             sal+= " -> : " +  map.get(""+(s-1))+ "\n";
             txta1.setText(sal);
+            try{
             a=Integer.parseInt(map.get(""+(s-1)));
             map.put(""+(s-1), ""+(a+1));
+            }catch(Exception e)
+            {
+                b=map.get(""+(s-1)); // en caso de no sea valor numerico
+           
+            }
             
             } 
             
-                   int pa = Integer.parseInt(oper4);
-            p=p+pa;
+            try{int pa = Integer.parseInt(oper4);
+            p=p+pa;}
+            catch(Exception e){ // en caso de que no exista contador en el ciclo
+                p=p+1;
+                System.out.println("sin contador "); 
+            }
                 }
             }    
             cuadruplos(6);
@@ -1504,6 +1558,7 @@ void imprimepilaop3()
    
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        numeros.clear();
         map.clear();
         txta1.setText("");
         sal="";
@@ -1587,13 +1642,13 @@ void imprimepilaop3()
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
